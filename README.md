@@ -1,0 +1,46 @@
+# Sea Union · Demo phase 1
+
+Demo React + React Flow chạy hoàn toàn phía trình duyệt.
+
+```sh
+npm install
+npm run dev
+```
+
+Mở URL local Vite in ra. `npm run build` tạo bản static trong `dist/`; `npm test` kiểm tra cấu trúc map và đối chiếu điểm.
+
+## Thử demo
+
+- Kéo nền để pan, cuộn/pinch để zoom, nút **Toàn cảnh** để fit map.
+- Hover hoặc focus đảo để xem điểm bốn phe; click icon mở panel chi tiết.
+- Nút ghim từng đảo giữ bảng điểm; **Điểm toàn map** hiện mọi bảng. Tắt tùy chọn chung vẫn giữ các đảo được ghim riêng.
+- Lọc phe làm mờ các đảo khác, không thay đổi bố cục.
+- Tìm ID/tên đảo để tới đảo; tab xếp hạng mở phân bố điểm của từng player và liên kết tới cứ điểm.
+
+## Map theo ảnh đầy đủ
+
+Map hiện có 89 node: 24 đảo tầng 1, 52 đảo tầng 2, 9 cứ điểm trên hàng giữa và 4 base. `src/data/map-layout.js` chứa ID, tọa độ ghép từ `specs/map-left.PNG`, `map-mid.PNG`, `map-right.PNG` và 118 đường nối đọc từ ảnh. Tọa độ được phóng đồng đều để giữ tỷ lệ bố cục và khoảng cách. Không sinh map bằng cách xoay một cụm node; các index thật được khai báo riêng ở đúng khu vực trong ảnh.
+
+Hai cứ điểm trung tâm có tiền tố thấy được là `3-` (Thành địa nghỉ dưỡng) và `4-` (Khách sạn Cực Lạc). Chưa đọc được index đầy đủ nên tạm dùng ID `3`, `4` với `indexPending: true`. Cứ điểm `4` là tâm tọa độ của map. Các base không có index trong ảnh nên dùng ID nội bộ `base-north/east/south/west`. Node `3-4` không được tự thêm.
+
+Tên đảo dùng index; tên, boss, phe sở hữu và điểm vẫn là dữ liệu mẫu, chưa chép trạng thái game. Bốn base không có điểm tấn công. Bảng điểm co giãn theo zoom; zoom gần hơn để đọc.
+
+`src/data/demo.js` giữ đóng góp mẫu của player. Các hàm thuần trong `src/domain/selectors.js` tính điểm phe và leaderboard từ cùng nguồn để khớp hai quan hệ trong intent. Chưa có nhập dữ liệu, lưu trạng thái hay đồng bộ giữa người dùng. Ghim, lọc và các lựa chọn chỉ tồn tại trong phiên trang hiện tại.
+
+## Tổ chức code
+
+- `src/main.jsx`: khởi tạo React và nạp CSS.
+- `src/App.jsx`: bố cục ứng dụng và nối props/callback giữa các vùng UI.
+- `src/components/layout/`: header và thanh điều hướng.
+- `src/components/map/`: map, custom node/edge, toolbar, bảng điểm nhỏ và chú giải.
+- `src/components/panels/`: panel cứ điểm, bảng điểm phe, player và leaderboard.
+- `src/components/shared/`: UI dùng chung.
+- `src/hooks/useTacticalMap.js`: state, ghim/lọc/chọn đảo, tìm kiếm và thao tác viewport.
+- `src/domain/`: hàm thuần tính điểm, truy vấn chi tiết, tìm kiếm và chuyển dữ liệu sang model React Flow; kèm test.
+- `src/data/`: bố cục theo ảnh, định nghĩa phe và fixture demo.
+- `src/utils/format.js`: định dạng số để hiển thị.
+- `src/style.css`: style và responsive layout.
+
+UI nhận dữ liệu đã chuẩn bị qua props; hook nối dữ liệu với logic tương tác. Domain không import React hoặc component. Các callback được giữ ổn định trong hook; điểm và leaderboard không tính lại theo mỗi thao tác pan/zoom.
+
+Câu hỏi cần chủ dự án xác nhận được ghi vào [NEED_CONFIRM.md](NEED_CONFIRM.md) trước khi hỏi.
