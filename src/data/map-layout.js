@@ -188,6 +188,22 @@ for (const chain of chains)
     unique.set(id, { id, source, target });
   }
 export const layoutRoutes = [...unique.values()];
+// Panning is clamped to the mapped area, so the canvas never scrolls into
+// empty space: extent = node positions ± half a node (140x85, centered) ± margin.
+const HALF_NODE = { x: 70, y: 43 };
+const MAP_MARGIN = 150;
+const xs = layoutNodes.map((node) => node.position.x);
+const ys = layoutNodes.map((node) => node.position.y);
+export const mapBounds = [
+  [
+    Math.min(...xs) - HALF_NODE.x - MAP_MARGIN,
+    Math.min(...ys) - HALF_NODE.y - MAP_MARGIN,
+  ],
+  [
+    Math.max(...xs) + HALF_NODE.x + MAP_MARGIN,
+    Math.max(...ys) + HALF_NODE.y + MAP_MARGIN,
+  ],
+];
 export const mapSources = [
   "specs/map-left.PNG",
   "specs/map-mid.PNG",
