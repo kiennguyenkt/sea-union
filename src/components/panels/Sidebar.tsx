@@ -1,6 +1,7 @@
 import { Compass, Flag, RotateCcw, Trophy } from "lucide-react";
 import { NodeDetails } from "./NodeDetails";
 import { Leaderboard } from "./Leaderboard";
+import styles from "./Sidebar.module.css";
 import type { LeaderboardPlayer, NodeDetailData } from "../../types";
 import type { TacticalMapTab } from "../../hooks/useTacticalMap";
 
@@ -28,16 +29,16 @@ export function Sidebar({
   onClearPins,
 }: SidebarProps) {
   return (
-    <aside>
-      <div className="aside-tabs">
+    <aside className={styles.sidebar}>
+      <div className={styles.tabs}>
         <button
-          className={tab === "node" ? "selected" : ""}
+          className={tab === "node" ? styles.selected : ""}
           onClick={() => onTabChange("node")}
         >
           <Flag size={15} /> Cứ điểm
         </button>
         <button
-          className={tab === "ranking" ? "selected" : ""}
+          className={tab === "ranking" ? styles.selected : ""}
           onClick={() => onTabChange("ranking")}
         >
           <Trophy size={15} /> Xếp hạng
@@ -53,13 +54,13 @@ export function Sidebar({
           onTogglePin={onTogglePin}
         />
       ) : (
-        <div className="empty">
+        <div className={styles.empty}>
           <Compass size={40} />
           <h2>Khám phá chiến trường</h2>
           <p>Chọn một đảo trên map để xem điểm các phe và người chơi.</p>
         </div>
       )}
-      <div className="aside-foot">
+      <div className={styles.foot}>
         <span>
           <i /> Dữ liệu minh họa
         </span>

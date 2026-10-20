@@ -1,0 +1,18 @@
+.mapCanvas {
+  position: relative;
+  flex: 1;
+  min-height: 320px;
+  overflow: hidden;
+  border: 1px solid #d5dcdf;
+  border-radius: 9px;
+  background: #ffffff;
+}
+
+.zoomLabel {
+  position: absolute;
+  left: 55px;
+  bottom: 21px;
+  color: #7d8f9a;
+  font-size: 10px;
+  pointer-events: none;
+}

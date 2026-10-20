@@ -1,4 +1,5 @@
 import { Search, Layers, Crosshair } from "lucide-react";
+import styles from "./MapToolbar.module.css";
 import type { Island } from "../../types";
 
 export interface MapToolbarProps {
@@ -21,8 +22,8 @@ export function MapToolbar({
   onFitMap,
 }: MapToolbarProps) {
   return (
-    <div className="toolbar">
-      <div className="search">
+    <div className={styles.toolbar}>
+      <div className={styles.search}>
         <Search size={16} />
         <input
           aria-label="Tìm đảo"
@@ -31,7 +32,7 @@ export function MapToolbar({
           onChange={(event) => onQueryChange(event.target.value)}
         />
         {matches.length > 0 && (
-          <div className="search-results">
+          <div className={styles.searchResults}>
             {matches.map((island) => (
               <button key={island.id} onClick={() => onFocusIsland(island.id)}>
                 {island.id}
@@ -41,19 +42,21 @@ export function MapToolbar({
           </div>
         )}
         {query && !matches.length && (
-          <div className="search-results empty-result">Không tìm thấy đảo</div>
+          <div className={`${styles.searchResults} ${styles.emptyResult}`}>
+            Không tìm thấy đảo
+          </div>
         )}
       </div>
-      <label className="show-all">
+      <label className={styles.showAll}>
         <Layers size={16} /> Điểm toàn map
         <input
           type="checkbox"
           checked={showAll}
           onChange={(event) => onShowAllChange(event.target.checked)}
         />
-        <span className="switch" />
+        <span className={styles.switch} />
       </label>
-      <button className="fit" onClick={onFitMap}>
+      <button className={styles.fit} onClick={onFitMap}>
         <Crosshair size={16} /> Toàn cảnh
       </button>
     </div>

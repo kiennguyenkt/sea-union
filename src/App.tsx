@@ -6,19 +6,20 @@ import { MapToolbar } from "./components/map/MapToolbar";
 import { MapCanvas } from "./components/map/MapCanvas";
 import { FactionLegend } from "./components/map/FactionLegend";
 import { Sidebar } from "./components/panels/Sidebar";
+import styles from "./App.module.css";
 
 export function App() {
   const map = useTacticalMap();
   const { actions } = map;
   return (
-    <div className="app">
+    <div className={styles.app}>
       <AppHeader />
-      <div className="workspace">
+      <div className={styles.workspace}>
         <NavigationRail
           onFitMap={actions.fitMap}
           onShowRanking={() => actions.setTab("ranking")}
         />
-        <main>
+        <main className={styles.mainContent}>
           <MapHeading islandCount={map.islandCount} baseCount={map.baseCount} />
           <MapToolbar
             query={map.query}

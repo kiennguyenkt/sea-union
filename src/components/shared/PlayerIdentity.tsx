@@ -1,3 +1,4 @@
+import styles from "./PlayerIdentity.module.css";
 import type { Faction, Player } from "../../types";
 
 export interface PlayerIdentityProps {
@@ -17,10 +18,13 @@ export function PlayerIdentity({
 
   return (
     <>
-      <span className="avatar" style={{ color, background: `${color}18` }}>
+      <span
+        className={styles.avatar}
+        style={{ color, background: `${color}18` }}
+      >
         {name[0]}
       </span>
-      <div className="player-name">
+      <div className={styles.playerName}>
         {name}
         <small style={{ color }}>
           {factionName}

@@ -1,3 +1,5 @@
+import styles from "./MapHeading.module.css";
+
 export interface MapHeadingProps {
   islandCount: number;
   baseCount: number;
@@ -5,14 +7,14 @@ export interface MapHeadingProps {
 
 export function MapHeading({ islandCount, baseCount }: MapHeadingProps) {
   return (
-    <div className="map-heading">
+    <div className={styles.mapHeading}>
       <div>
-        <div className="eyebrow">CHIẾN TRƯỜNG / TỔNG QUAN</div>
-        <h1>
+        <div className={styles.eyebrow}>CHIẾN TRƯỜNG / TỔNG QUAN</div>
+        <h1 className={styles.title}>
           Đại hải trình<span>01</span>
         </h1>
       </div>
-      <div className="map-count">
+      <div className={styles.mapCount}>
         <b>{islandCount}</b> cứ điểm <span>·</span> <b>{baseCount}</b> căn cứ
       </div>
     </div>

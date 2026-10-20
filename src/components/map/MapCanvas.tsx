@@ -9,6 +9,7 @@ import {
 import { mapBounds } from "../../data/map-layout";
 import { IslandNode } from "./IslandNode";
 import { RouteEdge } from "./RouteEdge";
+import styles from "./MapCanvas.module.css";
 import type { AppNode } from "../../types";
 
 const nodeTypes = { island: IslandNode };
@@ -30,7 +31,7 @@ export function MapCanvas({
   onMove,
 }: MapCanvasProps) {
   return (
-    <div className="map-canvas">
+    <div className={styles.mapCanvas}>
       <ReactFlow
         nodes={nodes}
         edges={edges}
@@ -55,7 +56,7 @@ export function MapCanvas({
         <Background color="#c7ced3" gap={40} size={1} />
         <Controls showInteractive={false} />
       </ReactFlow>
-      <div className="zoom-label">{Math.round(zoom * 100)}%</div>
+      <div className={styles.zoomLabel}>{Math.round(zoom * 100)}%</div>
     </div>
   );
 }

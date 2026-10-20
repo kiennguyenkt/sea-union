@@ -1,6 +1,7 @@
 import { ChevronRight } from "lucide-react";
 import { compact, number } from "../../utils/format";
 import { PlayerIdentity } from "../shared/PlayerIdentity";
+import styles from "./Leaderboard.module.css";
 import type { LeaderboardPlayer } from "../../types";
 
 export interface LeaderboardProps {
@@ -10,14 +11,14 @@ export interface LeaderboardProps {
 
 export function Leaderboard({ players, onFocusIsland }: LeaderboardProps) {
   return (
-    <div className="detail ranking">
-      <div className="eyebrow">TOÀN CHIẾN TRƯỜNG</div>
+    <div className={`${styles.detail} ${styles.ranking}`}>
+      <div className={styles.eyebrow}>TOÀN CHIẾN TRƯỜNG</div>
       <h2>Bảng xếp hạng</h2>
       <p>Tổng điểm mẫu trên tất cả cứ điểm.</p>
       {players.map((player, index) => (
-        <details key={player.id}>
-          <summary>
-            <span className="rank">{index + 1}</span>
+        <details key={player.id} className={styles.item}>
+          <summary className={styles.summary}>
+            <span className={styles.rank}>{index + 1}</span>
             <PlayerIdentity
               player={player}
               faction={player.factionInfo}
@@ -26,7 +27,7 @@ export function Leaderboard({ players, onFocusIsland }: LeaderboardProps) {
             <b>{compact(player.score)}</b>
             <ChevronRight size={13} />
           </summary>
-          <div className="allocation">
+          <div className={styles.allocation}>
             {player.allocations.map((entry) => (
               <button
                 key={entry.nodeId}

@@ -40,7 +40,7 @@ Tên đảo dùng index; tên, boss, phe sở hữu và điểm vẫn là dữ l
 - `src/data/`: bố cục theo ảnh, định nghĩa phe và fixture demo.
 - `src/types.ts`: định nghĩa kiểu dữ liệu (model, props, React Flow node data).
 - `src/utils/format.ts`: định dạng số để hiển thị.
-- `src/style.css`: style và responsive layout.
+- `src/style.css`: global CSS reset, typography, scrollbar và React Flow styles; UI dùng CSS Modules co-located theo từng component.
 
 UI nhận dữ liệu đã chuẩn bị qua props; hook nối dữ liệu với logic tương tác. Domain không import React hoặc component. Các callback được giữ ổn định trong hook; điểm và leaderboard không tính lại theo mỗi thao tác pan/zoom.
 

@@ -1,4 +1,5 @@
 import { number } from "../../utils/format";
+import styles from "./FactionScores.module.css";
 import type { FactionScore } from "../../types";
 
 export interface FactionScoresProps {
@@ -8,7 +9,7 @@ export interface FactionScoresProps {
 
 export function FactionScores({ scores, total }: FactionScoresProps) {
   return (
-    <div className="faction-scores">
+    <div className={styles.factionScores}>
       {scores.map((faction) => (
         <div key={faction.id}>
           <div>
@@ -18,7 +19,7 @@ export function FactionScores({ scores, total }: FactionScoresProps) {
             </span>
             <b>{number(faction.score)}</b>
           </div>
-          <div className="bar-track">
+          <div className={styles.barTrack}>
             <div
               style={{
                 width: `${total ? (faction.score / total) * 100 : 0}%`,

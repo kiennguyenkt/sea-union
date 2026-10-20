@@ -1,4 +1,5 @@
 import { compact } from "../../utils/format";
+import styles from "./NodeStats.module.css";
 import type { FactionScore } from "../../types";
 
 export interface NodeStatsProps {
@@ -9,8 +10,8 @@ export interface NodeStatsProps {
 export function NodeStats({ name, scores }: NodeStatsProps) {
   if (!scores) return null;
   return (
-    <div className="node-stats">
-      <div className="stat-title">{name}</div>
+    <div className={styles.nodeStats}>
+      <div className={styles.statTitle}>{name}</div>
       {scores.map((faction) => (
         <div key={faction.id}>
           <span>

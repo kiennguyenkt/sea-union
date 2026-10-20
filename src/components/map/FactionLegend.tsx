@@ -1,3 +1,4 @@
+import styles from "./FactionLegend.module.css";
 import type { Faction } from "../../types";
 
 export interface FactionLegendProps {
@@ -12,9 +13,9 @@ export function FactionLegend({
   onSelectFaction,
 }: FactionLegendProps) {
   return (
-    <footer className="legend">
+    <footer className={styles.legend}>
       <button
-        className={filter === "all" ? "chosen" : ""}
+        className={filter === "all" ? styles.chosen : ""}
         onClick={() => onSelectFaction("all")}
       >
         Tất cả
@@ -22,18 +23,18 @@ export function FactionLegend({
       {factions.map((faction) => (
         <button
           key={faction.id}
-          className={filter === faction.id ? "chosen" : ""}
+          className={filter === faction.id ? styles.chosen : ""}
           onClick={() => onSelectFaction(faction.id)}
         >
           <i style={{ background: faction.color }} />
           {faction.name}
         </button>
       ))}
-      <span className="neutral">
+      <span className={styles.neutral}>
         <i />
         Trung lập
       </span>
-      <span className="legend-help">Kéo để di chuyển · Cuộn để zoom</span>
+      <span className={styles.legendHelp}>Kéo để di chuyển · Cuộn để zoom</span>
     </footer>
   );
 }

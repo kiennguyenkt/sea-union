@@ -1,0 +1,94 @@
+.island {
+  width: 140px;
+  height: 85px;
+  text-align: center;
+  position: relative;
+  transition: opacity 0.2s;
+  --faction: #7f929e;
+}
+
+.dim {
+  opacity: 0.2;
+}
+
+.islandIcon {
+  display: grid;
+  place-items: center;
+  margin: auto;
+  width: 55px;
+  height: 55px;
+  background: #ffffff;
+  border: 2px solid var(--faction);
+  color: var(--faction);
+  border-radius: 18px;
+  transform: rotate(45deg);
+  box-shadow:
+    0 0 0 5px rgba(130, 148, 160, 0.14),
+    0 6px 18px color-mix(in srgb, var(--faction) 22%, transparent);
+}
+
+.islandIcon svg {
+  transform: rotate(-45deg);
+}
+
+.islandIcon:hover,
+.active .islandIcon {
+  background: color-mix(in srgb, var(--faction) 12%, #ffffff);
+  box-shadow:
+    0 0 0 6px color-mix(in srgb, var(--faction) 22%, transparent),
+    0 6px 18px color-mix(in srgb, var(--faction) 32%, transparent);
+}
+
+.islandLabel {
+  margin-top: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  font-size: 12px;
+  color: #33424c;
+  white-space: nowrap;
+  font-weight: 600;
+}
+
+.islandLabel span {
+  background: rgba(255, 255, 255, 0.85);
+  padding: 2px 5px;
+  border-radius: 4px;
+}
+
+.pin {
+  display: grid;
+  place-items: center;
+  padding: 3px;
+  color: #8a9aa5;
+}
+
+.pin.pinned {
+  color: #0d9a6f;
+}
+
+.base .islandIcon {
+  width: 66px;
+  height: 66px;
+  border-radius: 18px;
+  border-width: 3px;
+}
+
+.base .islandLabel {
+  color: var(--faction);
+}
+
+.baseNote {
+  font-size: 8px;
+  color: #7e8f9a;
+  letter-spacing: 1px;
+  margin-top: 4px;
+}
+
+.central .islandIcon {
+  color: #bf8b1e;
+  border-color: #bf8b1e;
+  width: 68px;
+  height: 68px;
+}

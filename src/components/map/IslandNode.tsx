@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Handle, Position, type NodeProps } from "@xyflow/react";
 import { Anchor, Castle, Pin } from "lucide-react";
 import { NodeStats } from "./NodeStats";
+import styles from "./IslandNode.module.css";
 import type { AppNode } from "../../types";
 
 export function IslandNode({ data }: NodeProps<AppNode>) {
@@ -13,11 +14,11 @@ export function IslandNode({ data }: NodeProps<AppNode>) {
       ? "TRUNG TÂM"
       : "";
   const className = [
-    "island",
-    data.base && "base",
-    data.central && "central",
-    data.active && "active",
-    data.dim && "dim",
+    styles.island,
+    data.base && styles.base,
+    data.central && styles.central,
+    data.active && styles.active,
+    data.dim && styles.dim,
   ]
     .filter(Boolean)
     .join(" ");
@@ -41,7 +42,7 @@ export function IslandNode({ data }: NodeProps<AppNode>) {
         isConnectable={false}
       />
       <button
-        className="island-icon nodrag"
+        className={`${styles.islandIcon} nodrag`}
         onClick={() => data.open(data.id)}
         aria-label={`Xem ${data.id} ${data.name}`}
         onFocus={() => setHovered(true)}
@@ -49,10 +50,10 @@ export function IslandNode({ data }: NodeProps<AppNode>) {
       >
         <Icon size={data.base ? 31 : 24} />
       </button>
-      <div className="island-label">
+      <div className={styles.islandLabel}>
         <span>{data.id}</span> {direction}
         <button
-          className={`pin nodrag ${data.pinned ? "pinned" : ""}`}
+          className={`${styles.pin} nodrag ${data.pinned ? styles.pinned : ""}`}
           aria-label={`${data.pinned ? "Bỏ ghim" : "Ghim"} ${data.id}`}
           aria-pressed={data.pinned}
           onClick={() => data.pin(data.id)}
@@ -60,7 +61,7 @@ export function IslandNode({ data }: NodeProps<AppNode>) {
           <Pin size={13} />
         </button>
       </div>
-      {data.base && <div className="base-note">BASE · BẤT KHẢ CHIẾM</div>}
+      {data.base && <div className={styles.baseNote}>BASE · BẤT KHẢ CHIẾM</div>}
       {showStats && <NodeStats name={data.name} scores={data.scores} />}
       <Handle
         type="source"

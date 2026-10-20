@@ -1,4 +1,5 @@
 import { Map, Trophy, Compass } from "lucide-react";
+import styles from "./NavigationRail.module.css";
 
 export interface NavigationRailProps {
   onFitMap: () => void;
@@ -10,9 +11,9 @@ export function NavigationRail({
   onShowRanking,
 }: NavigationRailProps) {
   return (
-    <nav className="rail">
+    <nav className={styles.rail}>
       <button
-        className="rail-active"
+        className={styles.railActive}
         title="Bản đồ"
         aria-label="Bản đồ"
         onClick={onFitMap}
@@ -26,7 +27,7 @@ export function NavigationRail({
       >
         <Trophy />
       </button>
-      <div className="rail-bottom">
+      <div className={styles.railBottom}>
         <Compass size={22} />
       </div>
     </nav>
