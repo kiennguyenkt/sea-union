@@ -1,0 +1,47 @@
+.app {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.workspace {
+  display: flex;
+  height: calc(100dvh - 78px);
+  min-height: 560px;
+}
+
+.mainContent {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  padding: 27px 25px 0;
+}
+
+@media (min-width: 1600px) {
+  .mainContent {
+    padding: 32px 32px 0;
+  }
+}
+
+@media (max-width: 1100px) {
+  .mainContent {
+    padding: 22px 16px 0;
+  }
+}
+
+@media (max-width: 760px) {
+  .workspace {
+    height: auto;
+    min-height: calc(100dvh - 65px);
+    flex-wrap: wrap;
+  }
+
+  .mainContent {
+    width: 100%;
+    flex-basis: 100%;
+    padding: 20px 13px 0;
+    height: 72dvh;
+    min-height: 490px;
+  }
+}

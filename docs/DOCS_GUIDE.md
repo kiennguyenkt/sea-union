@@ -6,14 +6,14 @@
 
 ## Tài liệu hiện có
 
-| Tài liệu | Vai trò | Khi nào cập nhật |
-| --- | --- | --- |
-| [PROJECT_INTENT.md](PROJECT_INTENT.md) | Mục tiêu sản phẩm, nhu cầu, ràng buộc và phạm vi mong muốn | Khi chủ dự án bổ sung hoặc thay đổi yêu cầu |
-| [docs/RESEARCH.md](docs/RESEARCH.md) | Kết quả tìm hiểu, nguồn tham khảo, quyết định công nghệ và đề xuất kỹ thuật | Khi tìm hiểu giải pháp hoặc chốt/thay đổi hướng kỹ thuật |
-| [specs/](specs/) | Ảnh tham chiếu từ game, làm căn cứ cho map và dữ liệu điểm | Khi có thêm ảnh hoặc cập nhật nguồn từ game |
-| [DOCS_GUIDE.md](DOCS_GUIDE.md) | Chỉ dẫn đọc và tổ chức tài liệu | Khi thêm, chuyển hoặc đổi vai trò tài liệu |
-| [NEED_CONFIRM.md](NEED_CONFIRM.md) | Câu hỏi cần chủ dự án xác nhận, trạng thái và phương án tạm | Ghi câu hỏi trước khi hỏi; cập nhật khi có câu trả lời |
-| [README.md](README.md) | Cách chạy demo, tương tác đã triển khai và giới hạn dữ liệu | Khi thay đổi demo hoặc lệnh chạy |
+| Tài liệu                               | Vai trò                                                                     | Khi nào cập nhật                                         |
+| -------------------------------------- | --------------------------------------------------------------------------- | -------------------------------------------------------- |
+| [PROJECT_INTENT.md](PROJECT_INTENT.md) | Mục tiêu sản phẩm, nhu cầu, ràng buộc và phạm vi mong muốn                  | Khi chủ dự án bổ sung hoặc thay đổi yêu cầu              |
+| [docs/RESEARCH.md](docs/RESEARCH.md)   | Kết quả tìm hiểu, nguồn tham khảo, quyết định công nghệ và đề xuất kỹ thuật | Khi tìm hiểu giải pháp hoặc chốt/thay đổi hướng kỹ thuật |
+| [specs/](specs/)                       | Ảnh tham chiếu từ game, làm căn cứ cho map và dữ liệu điểm                  | Khi có thêm ảnh hoặc cập nhật nguồn từ game              |
+| [DOCS_GUIDE.md](DOCS_GUIDE.md)         | Chỉ dẫn đọc và tổ chức tài liệu                                             | Khi thêm, chuyển hoặc đổi vai trò tài liệu               |
+| [NEED_CONFIRM.md](NEED_CONFIRM.md)     | Câu hỏi cần chủ dự án xác nhận, trạng thái và phương án tạm                 | Ghi câu hỏi trước khi hỏi; cập nhật khi có câu trả lời   |
+| [README.md](README.md)                 | Cách chạy demo, tương tác đã triển khai và giới hạn dữ liệu                 | Khi thay đổi demo hoặc lệnh chạy                         |
 
 Thư mục `specs/` hiện chứa ảnh tham chiếu; tên thư mục không có nghĩa là đã có specs triển khai.
 
