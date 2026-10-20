@@ -1,6 +1,7 @@
 // Ownership, boss and contributions are demo data, separate from screenshot layout.
-import { layoutNodes, layoutRoutes } from "./map-layout.js";
-import { factions } from "./factions.js";
+import { layoutNodes, layoutRoutes } from "./map-layout";
+import { factions } from "./factions";
+import type { Contribution, Island, Player, Route } from "../types";
 
 const playerNames = [
   "Mây",
@@ -16,12 +17,12 @@ const playerNames = [
   "Sabo",
   "Jinbe",
 ];
-export const players = playerNames.map((name, index) => ({
+export const players: Player[] = playerNames.map((name, index) => ({
   id: `p${index}`,
   name,
   faction: factions[index % 4].id,
 }));
-export const islands = layoutNodes.map((node, index) => {
+export const islands: Island[] = layoutNodes.map((node, index) => {
   const { x, y } = node.position;
   const home =
     Math.abs(x) > Math.abs(y)
@@ -34,18 +35,18 @@ export const islands = layoutNodes.map((node, index) => {
   return {
     ...node,
     owner: node.base
-      ? node.owner
+      ? (node.owner ?? null)
       : index % 7 === 0 || node.central
         ? null
         : home,
     boss: node.base
       ? null
-      : ["Vệ binh biển", "Thuyền trưởng", "Hải vương"][index % 3],
+      : (["Vệ binh biển", "Thuyền trưởng", "Hải vương"][index % 3] ?? null),
     level: node.central ? 100 : node.tier === 1 ? 35 : 60,
   };
 });
-export const routes = layoutRoutes;
-export const contributions = islands
+export const routes: Route[] = layoutRoutes;
+export const contributions: Contribution[] = islands
   .filter((n) => !n.base)
   .flatMap((node, index) =>
     players

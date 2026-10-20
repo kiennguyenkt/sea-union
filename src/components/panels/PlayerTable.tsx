@@ -1,7 +1,12 @@
-import { number } from "../../utils/format.js";
-import { PlayerIdentity } from "../shared/PlayerIdentity.jsx";
+import { number } from "../../utils/format";
+import { PlayerIdentity } from "../shared/PlayerIdentity";
+import type { Attacker } from "../../types";
 
-export function PlayerTable({ attackers }) {
+export interface PlayerTableProps {
+  attackers: Attacker[];
+}
+
+export function PlayerTable({ attackers }: PlayerTableProps) {
   return (
     <div className="player-table">
       <div className="table-head">

@@ -69,4 +69,4 @@ Bố cục tạm đã được thay bằng `src/data/map-layout.js`, chứa inde
 
 ## 7. Tổ chức code React
 
-Theo yêu cầu của chủ dự án, UI và logic được phân tách: `main.jsx` chỉ mount ứng dụng; `App.jsx` ghép component và nối props; `components/` render UI; `hooks/useTacticalMap.js` quản lý state/tương tác; `domain/` giữ truy vấn và tính điểm thuần; `data/` giữ bố cục và fixture. Cấu trúc chi tiết nằm trong README. Câu hỏi cần xác nhận được ghi vào `NEED_CONFIRM.md` trước khi hỏi.
+Theo yêu cầu của chủ dự án, UI và logic được phân tách: `main.tsx` chỉ mount ứng dụng; `App.tsx` ghép component và nối props; `components/` render UI; `hooks/useTacticalMap.ts` quản lý state/tương tác; `domain/` giữ truy vấn và tính điểm thuần; `data/` giữ bố cục và fixture. Cấu trúc chi tiết nằm trong README. Câu hỏi cần xác nhận được ghi vào `NEED_CONFIRM.md` trước khi hỏi.

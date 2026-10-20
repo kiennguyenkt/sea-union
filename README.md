@@ -29,16 +29,17 @@ Tên đảo dùng index; tên, boss, phe sở hữu và điểm vẫn là dữ l
 
 ## Tổ chức code
 
-- `src/main.jsx`: khởi tạo React và nạp CSS.
-- `src/App.jsx`: bố cục ứng dụng và nối props/callback giữa các vùng UI.
+- `src/main.tsx`: khởi tạo React và nạp CSS.
+- `src/App.tsx`: bố cục ứng dụng và nối props/callback giữa các vùng UI.
 - `src/components/layout/`: header và thanh điều hướng.
 - `src/components/map/`: map, custom node/edge, toolbar, bảng điểm nhỏ và chú giải.
 - `src/components/panels/`: panel cứ điểm, bảng điểm phe, player và leaderboard.
 - `src/components/shared/`: UI dùng chung.
-- `src/hooks/useTacticalMap.js`: state, ghim/lọc/chọn đảo, tìm kiếm và thao tác viewport.
+- `src/hooks/useTacticalMap.ts`: state, ghim/lọc/chọn đảo, tìm kiếm và thao tác viewport.
 - `src/domain/`: hàm thuần tính điểm, truy vấn chi tiết, tìm kiếm và chuyển dữ liệu sang model React Flow; kèm test.
 - `src/data/`: bố cục theo ảnh, định nghĩa phe và fixture demo.
-- `src/utils/format.js`: định dạng số để hiển thị.
+- `src/types.ts`: định nghĩa kiểu dữ liệu (model, props, React Flow node data).
+- `src/utils/format.ts`: định dạng số để hiển thị.
 - `src/style.css`: style và responsive layout.
 
 UI nhận dữ liệu đã chuẩn bị qua props; hook nối dữ liệu với logic tương tác. Domain không import React hoặc component. Các callback được giữ ổn định trong hook; điểm và leaderboard không tính lại theo mỗi thao tác pan/zoom.

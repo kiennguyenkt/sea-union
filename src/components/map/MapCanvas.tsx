@@ -1,12 +1,34 @@
-import { ReactFlow, Background, Controls } from "@xyflow/react";
-import { mapBounds } from "../../data/map-layout.js";
-import { IslandNode } from "./IslandNode.jsx";
-import { RouteEdge } from "./RouteEdge.jsx";
+import {
+  ReactFlow,
+  Background,
+  Controls,
+  type Edge,
+  type ReactFlowInstance,
+  type Viewport,
+} from "@xyflow/react";
+import { mapBounds } from "../../data/map-layout";
+import { IslandNode } from "./IslandNode";
+import { RouteEdge } from "./RouteEdge";
+import type { AppNode } from "../../types";
 
 const nodeTypes = { island: IslandNode };
 const edgeTypes = { route: RouteEdge };
 
-export function MapCanvas({ nodes, edges, zoom, onInit, onMove }) {
+export interface MapCanvasProps {
+  nodes: AppNode[];
+  edges: Edge[];
+  zoom: number;
+  onInit: (instance: ReactFlowInstance<AppNode, Edge>) => void;
+  onMove: (event: unknown, viewport: Viewport) => void;
+}
+
+export function MapCanvas({
+  nodes,
+  edges,
+  zoom,
+  onInit,
+  onMove,
+}: MapCanvasProps) {
   return (
     <div className="map-canvas">
       <ReactFlow

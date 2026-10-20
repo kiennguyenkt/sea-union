@@ -1,6 +1,20 @@
 // Pure queries: no React, UI state, or dependency on the demo fixture.
-export function scoresForNode(nodeId, contributions, factions) {
-  const totals = new Map();
+import type {
+  Contribution,
+  Faction,
+  FactionScore,
+  Island,
+  LeaderboardPlayer,
+  NodeDetailData,
+  Player,
+} from "../types";
+
+export function scoresForNode(
+  nodeId: string,
+  contributions: Contribution[],
+  factions: Faction[]
+): FactionScore[] {
+  const totals = new Map<string, number>();
   for (const entry of contributions) {
     if (entry.nodeId === nodeId) {
       totals.set(entry.faction, (totals.get(entry.faction) ?? 0) + entry.score);
@@ -12,13 +26,20 @@ export function scoresForNode(nodeId, contributions, factions) {
   }));
 }
 
-export function playerAllocations(playerId, contributions) {
+export function playerAllocations(
+  playerId: string,
+  contributions: Contribution[]
+): Contribution[] {
   return contributions
     .filter((entry) => entry.playerId === playerId)
     .sort((a, b) => b.score - a.score);
 }
 
-export function buildLeaderboard(players, contributions, factions) {
+export function buildLeaderboard(
+  players: Player[],
+  contributions: Contribution[],
+  factions: Faction[]
+): LeaderboardPlayer[] {
   return players
     .map((player) => {
       const allocations = playerAllocations(player.id, contributions);
@@ -33,7 +54,14 @@ export function buildLeaderboard(players, contributions, factions) {
     .sort((a, b) => b.score - a.score);
 }
 
-export function nodeDetails(nodeId, islands, contributions, players, factions) {
+export function nodeDetails(
+  nodeId: string | null,
+  islands: Island[],
+  contributions: Contribution[],
+  players: Player[],
+  factions: Faction[]
+): NodeDetailData | null {
+  if (!nodeId) return null;
   const island = islands.find((node) => node.id === nodeId);
   if (!island) return null;
   const scores = scoresForNode(nodeId, contributions, factions);
@@ -54,7 +82,11 @@ export function nodeDetails(nodeId, islands, contributions, players, factions) {
   };
 }
 
-export function searchIslands(query, islands, limit = 6) {
+export function searchIslands(
+  query: string,
+  islands: Island[],
+  limit = 6
+): Island[] {
   const normalized = query.trim().toLocaleLowerCase("vi");
   if (!normalized) return [];
   return islands

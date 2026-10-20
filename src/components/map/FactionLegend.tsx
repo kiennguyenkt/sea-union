@@ -1,4 +1,16 @@
-export function FactionLegend({ factions, filter, onSelectFaction }) {
+import type { Faction } from "../../types";
+
+export interface FactionLegendProps {
+  factions: Faction[];
+  filter: string;
+  onSelectFaction: (id: string) => void;
+}
+
+export function FactionLegend({
+  factions,
+  filter,
+  onSelectFaction,
+}: FactionLegendProps) {
   return (
     <footer className="legend">
       <button

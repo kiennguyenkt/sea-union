@@ -1,8 +1,14 @@
 import { ChevronRight } from "lucide-react";
-import { compact, number } from "../../utils/format.js";
-import { PlayerIdentity } from "../shared/PlayerIdentity.jsx";
+import { compact, number } from "../../utils/format";
+import { PlayerIdentity } from "../shared/PlayerIdentity";
+import type { LeaderboardPlayer } from "../../types";
 
-export function Leaderboard({ players, onFocusIsland }) {
+export interface LeaderboardProps {
+  players: LeaderboardPlayer[];
+  onFocusIsland: (id: string) => void;
+}
+
+export function Leaderboard({ players, onFocusIsland }: LeaderboardProps) {
   return (
     <div className="detail ranking">
       <div className="eyebrow">TOÀN CHIẾN TRƯỜNG</div>

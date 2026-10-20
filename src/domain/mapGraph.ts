@@ -1,8 +1,29 @@
 // Translate domain data to React Flow models without rendering components.
-export function buildMapNodes(islands, scoresByNode, factions, state, actions) {
+import type { Edge } from "@xyflow/react";
+import type { AppNode, Faction, FactionScore, Island, Route } from "../types";
+
+export interface MapGraphState {
+  selected: string | null;
+  pinned: Set<string>;
+  showAll: boolean;
+  filter: string;
+}
+
+export interface MapGraphActions {
+  openIsland: (id: string) => void;
+  togglePin: (id: string) => void;
+}
+
+export function buildMapNodes(
+  islands: Island[],
+  scoresByNode: Map<string, FactionScore[]>,
+  factions: Faction[],
+  state: MapGraphState,
+  actions: MapGraphActions
+): AppNode[] {
   return islands.map((island) => ({
     id: island.id,
-    type: "island",
+    type: "island" as const,
     position: island.position,
     zIndex:
       state.showAll || state.pinned.has(island.id)
@@ -24,17 +45,22 @@ export function buildMapNodes(islands, scoresByNode, factions, state, actions) {
   }));
 }
 
-export function buildMapEdges(routes, islands, factions) {
+export function buildMapEdges(
+  routes: Route[],
+  islands: Island[],
+  factions: Faction[]
+): Edge[] {
   const byId = new Map(islands.map((island) => [island.id, island]));
   return routes.map((route) => {
     const source = byId.get(route.source);
     const target = byId.get(route.target);
     const faction =
-      source.owner && source.owner === target.owner
+      source?.owner && source.owner === target?.owner
         ? factions.find((entry) => entry.id === source.owner)
         : null;
     return {
       ...route,
+      id: `${route.source}__${route.target}`,
       sourceHandle: "out",
       targetHandle: "in",
       type: "route",

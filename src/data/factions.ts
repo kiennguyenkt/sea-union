@@ -1,4 +1,6 @@
-export const factions = [
+import type { Faction } from "../types";
+
+export const factions: Faction[] = [
   {
     id: "north",
     name: "Phe Bắc",

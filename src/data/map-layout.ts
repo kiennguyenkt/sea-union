@@ -1,7 +1,9 @@
 // Traced from specs/map-{left,mid,right}.PNG, in the middle screenshot's coordinates.
 // Left image offset: (-818,-30); right: (+710,-30). Names and scores are not transcribed.
 // IDs 3 and 4 are the visible prefixes on the two central landmarks; awaiting confirmation.
-const outer = [
+import type { LayoutNode, Position, Route } from "../types";
+
+const outer: [number, number, number][] = [
   [1, -548, 970],
   [2, 1452, 865],
   [3, -548, 1160],
@@ -27,7 +29,7 @@ const outer = [
   [23, 330, 305],
   [24, -288, 485],
 ];
-const inner = [
+const inner: [number, number, number][] = [
   [1, 770, 1445],
   [2, 967, 1085],
   [3, 884, 1175],
@@ -81,7 +83,7 @@ const inner = [
   [51, -288, 865],
   [52, 1112, 700],
 ];
-const center = [
+const center: [string, number][] = [
   ["3-7", -60],
   ["3-5", 54],
   ["3-3", 168],
@@ -92,15 +94,27 @@ const center = [
   ["3-1", 770],
   ["3-8", 882],
 ];
-const position = (x, y) => ({ x: (x - 412) * 2, y: (y - 970) * 2 });
-const indexed = (tier, rows) =>
+const position = (x: number, y: number): Position => ({
+  x: (x - 412) * 2,
+  y: (y - 970) * 2,
+});
+const indexed = (
+  tier: number,
+  rows: [number, number, number][]
+): LayoutNode[] =>
   rows.map(([index, x, y]) => ({
     id: `${tier}-${index}`,
     position: position(x, y),
     name: `Đảo ${tier}-${index}`,
     tier,
   }));
-export const layoutNodes = [
+const bases: [string, number, number][] = [
+  ["north", 412, 208],
+  ["east", 1584, 970],
+  ["south", 412, 1735],
+  ["west", -758, 970],
+];
+export const layoutNodes: LayoutNode[] = [
   ...indexed(1, outer),
   ...indexed(2, inner),
   ...center.map(([id, x]) => ({
@@ -116,12 +130,7 @@ export const layoutNodes = [
     tier: id === "4" ? 4 : 3,
     indexPending: id === "3" || id === "4",
   })),
-  ...[
-    ["north", 412, 208],
-    ["east", 1584, 970],
-    ["south", 412, 1735],
-    ["west", -758, 970],
-  ].map(([faction, x, y]) => ({
+  ...bases.map(([faction, x, y]) => ({
     id: `base-${faction}`,
     name: `Căn cứ ${faction}`,
     position: position(x, y),
@@ -129,7 +138,7 @@ export const layoutNodes = [
     owner: faction,
   })),
 ];
-const chains = [
+const chains: string[][] = [
   // Bases and the six-island branches on each side.
   ["base-north", "1-23", "1-12"],
   ["base-north", "1-10", "1-16"],
@@ -179,7 +188,7 @@ const chains = [
   ["2-15", "3-7", "2-31"],
   ["2-44", "3-8", "2-10"],
 ];
-const unique = new Map();
+const unique = new Map<string, Route & { id: string }>();
 for (const chain of chains)
   for (let i = 1; i < chain.length; i++) {
     const source = chain[i - 1],
@@ -187,14 +196,14 @@ for (const chain of chains)
       id = [source, target].sort().join("__");
     unique.set(id, { id, source, target });
   }
-export const layoutRoutes = [...unique.values()];
+export const layoutRoutes: Route[] = [...unique.values()];
 // Panning is clamped to the mapped area, so the canvas never scrolls into
 // empty space: extent = node positions ± half a node (140x85, centered) ± margin.
 const HALF_NODE = { x: 70, y: 43 };
 const MAP_MARGIN = 150;
 const xs = layoutNodes.map((node) => node.position.x);
 const ys = layoutNodes.map((node) => node.position.y);
-export const mapBounds = [
+export const mapBounds: [[number, number], [number, number]] = [
   [
     Math.min(...xs) - HALF_NODE.x - MAP_MARGIN,
     Math.min(...ys) - HALF_NODE.y - MAP_MARGIN,

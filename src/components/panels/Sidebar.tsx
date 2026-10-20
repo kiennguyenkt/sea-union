@@ -1,6 +1,20 @@
 import { Compass, Flag, RotateCcw, Trophy } from "lucide-react";
-import { NodeDetails } from "./NodeDetails.jsx";
-import { Leaderboard } from "./Leaderboard.jsx";
+import { NodeDetails } from "./NodeDetails";
+import { Leaderboard } from "./Leaderboard";
+import type { LeaderboardPlayer, NodeDetailData } from "../../types";
+import type { TacticalMapTab } from "../../hooks/useTacticalMap";
+
+export interface SidebarProps {
+  tab: TacticalMapTab;
+  details: NodeDetailData | null;
+  pinned: boolean;
+  leaderboard: LeaderboardPlayer[];
+  onTabChange: (tab: TacticalMapTab) => void;
+  onCloseIsland: () => void;
+  onTogglePin: (id: string) => void;
+  onFocusIsland: (id: string) => void;
+  onClearPins: () => void;
+}
 
 export function Sidebar({
   tab,
@@ -12,7 +26,7 @@ export function Sidebar({
   onTogglePin,
   onFocusIsland,
   onClearPins,
-}) {
+}: SidebarProps) {
   return (
     <aside>
       <div className="aside-tabs">

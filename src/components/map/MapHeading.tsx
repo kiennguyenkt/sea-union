@@ -1,4 +1,9 @@
-export function MapHeading({ islandCount, baseCount }) {
+export interface MapHeadingProps {
+  islandCount: number;
+  baseCount: number;
+}
+
+export function MapHeading({ islandCount, baseCount }: MapHeadingProps) {
   return (
     <div className="map-heading">
       <div>

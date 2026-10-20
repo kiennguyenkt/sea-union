@@ -1,6 +1,14 @@
 import { Map, Trophy, Compass } from "lucide-react";
 
-export function NavigationRail({ onFitMap, onShowRanking }) {
+export interface NavigationRailProps {
+  onFitMap: () => void;
+  onShowRanking: () => void;
+}
+
+export function NavigationRail({
+  onFitMap,
+  onShowRanking,
+}: NavigationRailProps) {
   return (
     <nav className="rail">
       <button

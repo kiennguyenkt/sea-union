@@ -1,4 +1,15 @@
 import { Search, Layers, Crosshair } from "lucide-react";
+import type { Island } from "../../types";
+
+export interface MapToolbarProps {
+  query: string;
+  matches: Island[];
+  showAll: boolean;
+  onQueryChange: (query: string) => void;
+  onFocusIsland: (id: string) => void;
+  onShowAllChange: (showAll: boolean) => void;
+  onFitMap: () => void;
+}
 
 export function MapToolbar({
   query,
@@ -8,7 +19,7 @@ export function MapToolbar({
   onFocusIsland,
   onShowAllChange,
   onFitMap,
-}) {
+}: MapToolbarProps) {
   return (
     <div className="toolbar">
       <div className="search">

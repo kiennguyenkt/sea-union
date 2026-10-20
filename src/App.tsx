@@ -1,11 +1,11 @@
-import { useTacticalMap } from "./hooks/useTacticalMap.js";
-import { AppHeader } from "./components/layout/AppHeader.jsx";
-import { NavigationRail } from "./components/layout/NavigationRail.jsx";
-import { MapHeading } from "./components/map/MapHeading.jsx";
-import { MapToolbar } from "./components/map/MapToolbar.jsx";
-import { MapCanvas } from "./components/map/MapCanvas.jsx";
-import { FactionLegend } from "./components/map/FactionLegend.jsx";
-import { Sidebar } from "./components/panels/Sidebar.jsx";
+import { useTacticalMap } from "./hooks/useTacticalMap";
+import { AppHeader } from "./components/layout/AppHeader";
+import { NavigationRail } from "./components/layout/NavigationRail";
+import { MapHeading } from "./components/map/MapHeading";
+import { MapToolbar } from "./components/map/MapToolbar";
+import { MapCanvas } from "./components/map/MapCanvas";
+import { FactionLegend } from "./components/map/FactionLegend";
+import { Sidebar } from "./components/panels/Sidebar";
 
 export function App() {
   const map = useTacticalMap();
@@ -45,7 +45,7 @@ export function App() {
         <Sidebar
           tab={map.tab}
           details={map.details}
-          pinned={map.pinned.has(map.details?.island.id)}
+          pinned={map.details ? map.pinned.has(map.details.island.id) : false}
           leaderboard={map.leaderboard}
           onTabChange={actions.setTab}
           onCloseIsland={actions.closeIsland}

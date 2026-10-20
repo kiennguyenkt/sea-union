@@ -1,6 +1,13 @@
-import { compact } from "../../utils/format.js";
+import { compact } from "../../utils/format";
+import type { FactionScore } from "../../types";
 
-export function NodeStats({ name, scores }) {
+export interface NodeStatsProps {
+  name: string;
+  scores?: FactionScore[];
+}
+
+export function NodeStats({ name, scores }: NodeStatsProps) {
+  if (!scores) return null;
   return (
     <div className="node-stats">
       <div className="stat-title">{name}</div>

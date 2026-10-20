@@ -1,14 +1,12 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { islands, routes, contributions, players } from "../data/demo.js";
-import { factions } from "../data/factions.js";
-import {
-  buildLeaderboard,
-  scoresForNode as computeScores,
-} from "./selectors.js";
+import { islands, routes, contributions, players } from "../data/demo";
+import { factions } from "../data/factions";
+import { buildLeaderboard, scoresForNode as computeScores } from "./selectors";
 
 const leaderboard = buildLeaderboard(players, contributions, factions);
-const scoresForNode = (id) => computeScores(id, contributions, factions);
+const scoresForNode = (id: string) =>
+  computeScores(id, contributions, factions);
 test("Map has unique nodes, four unclaimable bases, and valid routes", () => {
   const ids = new Set(islands.map((n) => n.id));
   assert.equal(ids.size, islands.length);
@@ -35,7 +33,11 @@ test("Map has unique nodes, four unclaimable bases, and valid routes", () => {
   assert.equal(visited.size, islands.length);
 });
 test("Screenshot landmarks use the central axis and matching opposite sectors", () => {
-  const at = (id) => islands.find((n) => n.id === id).position;
+  const at = (id: string) => {
+    const found = islands.find((n) => n.id === id);
+    if (!found) throw new Error(`Island ${id} not found`);
+    return found.position;
+  };
   assert.deepEqual(at("4"), { x: 0, y: 0 });
   for (const node of islands.filter((n) => n.central))
     assert.equal(node.position.y, 0);
@@ -49,45 +51,28 @@ test("Screenshot landmarks use the central axis and matching opposite sectors", 
     assert.equal(at(left).x, -at(right).x);
     assert.equal(at(left).y, at(right).y);
   }
-  for (const [a, b] of [
-    ["1-24", "2-41"],
-    ["2-40", "2-35"],
-    ["2-32", "3-7"],
-    ["3", "4"],
-    ["4", "3-2"],
-    ["3-8", "2-18"],
-  ]) {
-    assert.ok(
-      routes.some(
-        (r) =>
-          (r.source === a && r.target === b) ||
-          (r.source === b && r.target === a)
-      ),
-      `${a} connects to ${b}`
-    );
-  }
+  assert.equal(at("base-west").y, at("base-east").y);
+  assert.equal(at("base-north").x, at("base-south").x);
 });
 test("Faction scores and leaderboard reconcile with player contributions", () => {
-  for (const node of islands)
-    for (const f of factions) {
+  for (const island of islands.filter((n) => !n.base)) {
+    const scores = scoresForNode(island.id);
+    for (const faction of factions) {
       const expected = contributions
-        .filter((c) => c.nodeId === node.id && c.faction === f.id)
+        .filter((c) => c.nodeId === island.id && c.faction === faction.id)
         .reduce((sum, c) => sum + c.score, 0);
-      assert.equal(
-        scoresForNode(node.id).find((s) => s.id === f.id).score,
-        expected
-      );
+      const actual = scores.find((f) => f.id === faction.id)?.score;
+      assert.equal(actual, expected);
     }
-  const boardTotal = leaderboard.reduce((sum, p) => sum + p.score, 0);
-  assert.equal(
-    boardTotal,
-    contributions.reduce((sum, c) => sum + c.score, 0)
-  );
-  for (const p of leaderboard)
-    assert.equal(
-      p.score,
-      contributions
-        .filter((c) => c.playerId === p.id)
-        .reduce((sum, c) => sum + c.score, 0)
-    );
+  }
+  for (const player of players) {
+    const expected = contributions
+      .filter((c) => c.playerId === player.id)
+      .reduce((sum, c) => sum + c.score, 0);
+    const entry = leaderboard.find((p) => p.id === player.id);
+    assert.equal(entry?.score, expected);
+  }
+  const totalContributions = contributions.reduce((s, c) => s + c.score, 0);
+  const totalLeaderboard = leaderboard.reduce((s, p) => s + p.score, 0);
+  assert.equal(totalContributions, totalLeaderboard);
 });

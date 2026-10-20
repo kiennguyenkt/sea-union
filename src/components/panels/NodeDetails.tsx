@@ -1,9 +1,22 @@
 import { Anchor, Castle, Pin, Shield, X } from "lucide-react";
-import { number } from "../../utils/format.js";
-import { FactionScores } from "./FactionScores.jsx";
-import { PlayerTable } from "./PlayerTable.jsx";
+import { number } from "../../utils/format";
+import { FactionScores } from "./FactionScores";
+import { PlayerTable } from "./PlayerTable";
+import type { NodeDetailData } from "../../types";
 
-export function NodeDetails({ details, pinned, onClose, onTogglePin }) {
+export interface NodeDetailsProps {
+  details: NodeDetailData;
+  pinned: boolean;
+  onClose: () => void;
+  onTogglePin: (id: string) => void;
+}
+
+export function NodeDetails({
+  details,
+  pinned,
+  onClose,
+  onTogglePin,
+}: NodeDetailsProps) {
   const { island, owner, scores, total, attackers } = details;
   return (
     <div className="detail">

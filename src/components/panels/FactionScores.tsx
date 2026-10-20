@@ -1,6 +1,12 @@
-import { number } from "../../utils/format.js";
+import { number } from "../../utils/format";
+import type { FactionScore } from "../../types";
 
-export function FactionScores({ scores, total }) {
+export interface FactionScoresProps {
+  scores: FactionScore[];
+  total: number;
+}
+
+export function FactionScores({ scores, total }: FactionScoresProps) {
   return (
     <div className="faction-scores">
       {scores.map((faction) => (

@@ -1,9 +1,10 @@
 import { useState } from "react";
-import { Handle, Position } from "@xyflow/react";
+import { Handle, Position, type NodeProps } from "@xyflow/react";
 import { Anchor, Castle, Pin } from "lucide-react";
-import { NodeStats } from "./NodeStats.jsx";
+import { NodeStats } from "./NodeStats";
+import type { AppNode } from "../../types";
 
-export function IslandNode({ data }) {
+export function IslandNode({ data }: NodeProps<AppNode>) {
   const [hovered, setHovered] = useState(false);
   const Icon = data.base || data.central ? Castle : Anchor;
   const direction = data.base
@@ -25,7 +26,11 @@ export function IslandNode({ data }) {
   return (
     <div
       className={className}
-      style={{ "--faction": data.factionInfo?.color || "#97acbb" }}
+      style={
+        {
+          "--faction": data.factionInfo?.color || "#97acbb",
+        } as React.CSSProperties
+      }
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
     >
