@@ -65,7 +65,7 @@ Theo yêu cầu dựng demo sơ, repo đã có React + Vite + React Flow. [READM
 
 Các phương án thử nghiệm đã dùng: click mở panel bên cạnh, ghim từng đảo độc lập với tùy chọn toàn map, bảng stat co giãn theo zoom, pan/zoom và fit map, lọc phe bằng cách làm mờ đảo khác. Không kéo/đổi node hoặc chỉnh đường nối. Leaderboard và điểm phe suy ra từ đóng góp mẫu của player.
 
-Bố cục tạm đã được thay bằng `src/data/map-layout.js`, chứa index và tọa độ ghép từ ba ảnh toàn map, với các đường nối đọc từ ảnh. Hai landmark giữa dùng ID tạm `3` và `4` vì chưa đọc được index đầy đủ; không tự thêm `3-4`. Boss, phe sở hữu và điểm vẫn là dữ liệu minh họa. Những lựa chọn hành vi này cần phản hồi từ chủ dự án trước khi coi là thiết kế cuối cùng.
+Bố cục tạm đã được thay bằng `src/data/map-layout.ts`, chứa index và tọa độ ghép từ ba ảnh toàn map, với các đường nối đọc từ ảnh. Dải cứ điểm giữa gồm đầy đủ `3-1` đến `3-8` và `4` (NC-01); toàn bộ tên node được chuẩn hóa theo index (`Cứ điểm ${id}` và `Đảo ${id}`). Boss, phe sở hữu và điểm vẫn là dữ liệu minh họa. Những lựa chọn hành vi này cần phản hồi từ chủ dự án trước khi coi là thiết kế cuối cùng.
 
 ## 7. Tổ chức code React
 

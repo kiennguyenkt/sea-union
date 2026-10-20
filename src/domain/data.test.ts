@@ -14,11 +14,10 @@ test("Map has unique nodes, four unclaimable bases, and valid routes", () => {
   assert.equal(islands.length, 89);
   for (let index = 1; index <= 24; index++) assert.ok(ids.has(`1-${index}`));
   for (let index = 1; index <= 52; index++) assert.ok(ids.has(`2-${index}`));
+  for (let index = 1; index <= 8; index++) assert.ok(ids.has(`3-${index}`));
+  assert.ok(ids.has("4"));
   for (const n of islands)
-    assert.match(
-      n.id,
-      /^(?:base-(?:north|east|south|west)|[34]|[123]-\d{1,2})$/
-    );
+    assert.match(n.id, /^(?:base-(?:north|east|south|west)|4|[123]-\d{1,2})$/);
   for (const r of routes) {
     assert.ok(ids.has(r.source));
     assert.ok(ids.has(r.target));

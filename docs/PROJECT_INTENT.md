@@ -107,7 +107,7 @@ Các chi tiết về giao diện, cách nhập dữ liệu, mô hình dữ liệ
 
 ### 9.2. Những điểm còn để mở
 
-- Xác nhận index đầy đủ của hai cứ điểm giữa có tiền tố `3-`, `4-`; các ID còn lại và đường nối đã được đọc từ ba ảnh toàn map.
+- ~~Xác nhận index đầy đủ của hai cứ điểm giữa có tiền tố `3-`, `4-`~~: đã xác nhận qua NC-01 (Khách Sạn Cực Lạc là ID `4`, Thành Địa Nghỉ Dưỡng là ID `3-1`, dải cứ điểm giữa gồm `3-1` đến `3-8` và `4`).
 - Cách trình bày bảng thông tin để vẫn đọc được khi bật tất cả node cùng lúc.
 - Hành vi click cụ thể và quan hệ giữa toggle riêng với tùy chọn hiển thị toàn bộ.
 - Nhu cầu zoom/pan và cách tương tác trên thiết bị cảm ứng.

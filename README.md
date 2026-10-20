@@ -19,13 +19,13 @@ Mở URL local Vite in ra. `npm run build` tạo bản static trong `dist/`; `np
 
 ## Map theo ảnh đầy đủ
 
-Map hiện có 89 node: 24 đảo tầng 1, 52 đảo tầng 2, 9 cứ điểm trên hàng giữa và 4 base. `src/data/map-layout.js` chứa ID, tọa độ ghép từ `specs/map-left.PNG`, `map-mid.PNG`, `map-right.PNG` và 118 đường nối đọc từ ảnh. Tọa độ được phóng đồng đều để giữ tỷ lệ bố cục và khoảng cách. Không sinh map bằng cách xoay một cụm node; các index thật được khai báo riêng ở đúng khu vực trong ảnh.
+Map hiện có 89 node: 24 đảo tầng 1, 52 đảo tầng 2, 9 cứ điểm trên hàng giữa và 4 base. `src/data/map-layout.ts` chứa ID, tọa độ ghép từ `specs/map-left.PNG`, `map-mid.PNG`, `map-right.PNG` và 118 đường nối đọc từ ảnh. Tọa độ được phóng đồng đều để giữ tỷ lệ bố cục và khoảng cách. Không sinh map bằng cách xoay một cụm node; các index thật được khai báo riêng ở đúng khu vực trong ảnh.
 
-Hai cứ điểm trung tâm có tiền tố thấy được là `3-` (Thành địa nghỉ dưỡng) và `4-` (Khách sạn Cực Lạc). Chưa đọc được index đầy đủ nên tạm dùng ID `3`, `4` với `indexPending: true`. Cứ điểm `4` là tâm tọa độ của map. Các base không có index trong ảnh nên dùng ID nội bộ `base-north/east/south/west`. Node `3-4` không được tự thêm.
+Cứ điểm trung tâm là `4` — là tâm tọa độ của map. Dãy cứ điểm trục giữa gồm 9 node theo index từ tây sang đông: `3-7`, `3-5`, `3-3`, `3-1`, `4` (tâm), `3-2`, `3-4`, `3-6`, `3-8`. Toàn bộ tên node được chuẩn hóa theo index (`Đảo 1-x`, `Đảo 2-x`, `Cứ điểm 3-x/4`). Các base không có index trong ảnh nên dùng ID nội bộ `base-north/east/south/west`.
 
 Tên đảo dùng index; tên, boss, phe sở hữu và điểm vẫn là dữ liệu mẫu, chưa chép trạng thái game. Bốn base không có điểm tấn công. Bảng điểm co giãn theo zoom; zoom gần hơn để đọc.
 
-`src/data/demo.js` giữ đóng góp mẫu của player. Các hàm thuần trong `src/domain/selectors.js` tính điểm phe và leaderboard từ cùng nguồn để khớp hai quan hệ trong intent. Chưa có nhập dữ liệu, lưu trạng thái hay đồng bộ giữa người dùng. Ghim, lọc và các lựa chọn chỉ tồn tại trong phiên trang hiện tại.
+`src/data/demo.ts` giữ đóng góp mẫu của player. Các hàm thuần trong `src/domain/selectors.ts` tính điểm phe và leaderboard từ cùng nguồn để khớp hai quan hệ trong intent. Chưa có nhập dữ liệu, lưu trạng thái hay đồng bộ giữa người dùng. Ghim, lọc và các lựa chọn chỉ tồn tại trong phiên trang hiện tại.
 
 ## Tổ chức code
 

@@ -1,6 +1,6 @@
 // Traced from specs/map-{left,mid,right}.PNG, in the middle screenshot's coordinates.
 // Left image offset: (-818,-30); right: (+710,-30). Names and scores are not transcribed.
-// IDs 3 and 4 are the visible prefixes on the two central landmarks; awaiting confirmation.
+// ID 4 is the central landmark; 3-1 to 3-8 are the central axis landmarks.
 import type { LayoutNode, Position, Route } from "../types";
 
 const outer: [number, number, number][] = [
@@ -87,11 +87,11 @@ const center: [string, number][] = [
   ["3-7", -60],
   ["3-5", 54],
   ["3-3", 168],
-  ["3", 282],
+  ["3-1", 282],
   ["4", 412],
   ["3-2", 542],
-  ["3-6", 656],
-  ["3-1", 770],
+  ["3-4", 656],
+  ["3-6", 770],
   ["3-8", 882],
 ];
 const position = (x: number, y: number): Position => ({
@@ -120,15 +120,9 @@ export const layoutNodes: LayoutNode[] = [
   ...center.map(([id, x]) => ({
     id,
     position: position(x, 970),
-    name:
-      id === "4"
-        ? "Khách sạn Cực Lạc"
-        : id === "3"
-          ? "Thành địa nghỉ dưỡng"
-          : `Cứ điểm ${id}`,
+    name: `Cứ điểm ${id}`,
     central: true,
     tier: id === "4" ? 4 : 3,
-    indexPending: id === "3" || id === "4",
   })),
   ...bases.map(([faction, x, y]) => ({
     id: `base-${faction}`,
