@@ -13,7 +13,7 @@ const scoresByNode = new Map(
   islands.map((node) => [
     node.id,
     scoresForNode(node.id, contributions, factions),
-  ]),
+  ])
 );
 const edges = buildMapEdges(routes, islands, factions);
 const leaderboard = buildLeaderboard(players, contributions, factions);
@@ -42,23 +42,23 @@ export function useTacticalMap() {
         else next.add(id);
         return next;
       }),
-    [],
+    []
   );
   const clearPins = useCallback(() => setPinned(new Set()), []);
   const selectFaction = useCallback(
     (id) => setFilter((previous) => (previous === id ? "all" : id)),
-    [],
+    []
   );
   const initializeFlow = useCallback((instance) => {
     flowRef.current = instance;
   }, []);
   const updateViewport = useCallback(
     (_, viewport) => setZoom(viewport.zoom),
-    [],
+    []
   );
   const fitMap = useCallback(
     () => flowRef.current?.fitView({ padding: 0.15, duration: 500 }),
-    [],
+    []
   );
   const focusIsland = useCallback(
     (id) => {
@@ -71,7 +71,7 @@ export function useTacticalMap() {
         duration: 500,
       });
     },
-    [openIsland],
+    [openIsland]
   );
 
   const nodes = useMemo(
@@ -81,13 +81,13 @@ export function useTacticalMap() {
         scoresByNode,
         factions,
         { selected, pinned, showAll, filter },
-        { openIsland, togglePin },
+        { openIsland, togglePin }
       ),
-    [selected, pinned, showAll, filter, openIsland, togglePin],
+    [selected, pinned, showAll, filter, openIsland, togglePin]
   );
   const details = useMemo(
     () => nodeDetails(selected, islands, contributions, players, factions),
-    [selected],
+    [selected]
   );
   const matches = useMemo(() => searchIslands(query, islands), [query]);
 

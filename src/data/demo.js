@@ -55,5 +55,5 @@ export const contributions = islands
         faction: player.faction,
         score: (((index * 17 + p * 11) % 9) + 1) * 1250,
       }))
-      .filter((_, p) => (index + p) % 3 !== 0),
+      .filter((_, p) => (index + p) % 3 !== 0)
   );

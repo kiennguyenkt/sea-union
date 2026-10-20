@@ -19,7 +19,7 @@ test("Map has unique nodes, four unclaimable bases, and valid routes", () => {
   for (const n of islands)
     assert.match(
       n.id,
-      /^(?:base-(?:north|east|south|west)|[34]|[123]-\d{1,2})$/,
+      /^(?:base-(?:north|east|south|west)|[34]|[123]-\d{1,2})$/
     );
   for (const r of routes) {
     assert.ok(ids.has(r.source));
@@ -61,9 +61,9 @@ test("Screenshot landmarks use the central axis and matching opposite sectors", 
       routes.some(
         (r) =>
           (r.source === a && r.target === b) ||
-          (r.source === b && r.target === a),
+          (r.source === b && r.target === a)
       ),
-      `${a} connects to ${b}`,
+      `${a} connects to ${b}`
     );
   }
 });
@@ -75,19 +75,19 @@ test("Faction scores and leaderboard reconcile with player contributions", () =>
         .reduce((sum, c) => sum + c.score, 0);
       assert.equal(
         scoresForNode(node.id).find((s) => s.id === f.id).score,
-        expected,
+        expected
       );
     }
   const boardTotal = leaderboard.reduce((sum, p) => sum + p.score, 0);
   assert.equal(
     boardTotal,
-    contributions.reduce((sum, c) => sum + c.score, 0),
+    contributions.reduce((sum, c) => sum + c.score, 0)
   );
   for (const p of leaderboard)
     assert.equal(
       p.score,
       contributions
         .filter((c) => c.playerId === p.id)
-        .reduce((sum, c) => sum + c.score, 0),
+        .reduce((sum, c) => sum + c.score, 0)
     );
 });

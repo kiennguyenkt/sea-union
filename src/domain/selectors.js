@@ -59,7 +59,7 @@ export function searchIslands(query, islands, limit = 6) {
   if (!normalized) return [];
   return islands
     .filter((node) =>
-      `${node.id} ${node.name}`.toLocaleLowerCase("vi").includes(normalized),
+      `${node.id} ${node.name}`.toLocaleLowerCase("vi").includes(normalized)
     )
     .slice(0, limit);
 }

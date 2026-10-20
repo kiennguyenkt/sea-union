@@ -34,11 +34,11 @@ test("Queries prepare detail and allocation data without mutating the source", (
   assert.equal(details.attackers[0].factionInfo.id, "b");
   assert.deepEqual(
     scoresForNode("missing", contributions, factions).map((f) => f.score),
-    [0, 0],
+    [0, 0]
   );
   assert.equal(
     nodeDetails("missing", islands, contributions, players, factions),
-    null,
+    null
   );
   const board = buildLeaderboard(players, contributions, factions);
   assert.equal(board[0].id, "p1");
@@ -46,7 +46,7 @@ test("Queries prepare detail and allocation data without mutating the source", (
   assert.equal(board[0].nodes, 2);
   assert.deepEqual(
     board[0].allocations.map((c) => c.nodeId),
-    ["2-1", "1-1"],
+    ["2-1", "1-1"]
   );
   assert.deepEqual(contributions, original);
 });
@@ -61,7 +61,7 @@ test("Search handles whitespace, casing, indexes, empty queries and result limit
 
 test("Map projection keeps pinning independent from global stats and filtering", () => {
   const scores = new Map(
-    islands.map((n) => [n.id, scoresForNode(n.id, contributions, factions)]),
+    islands.map((n) => [n.id, scoresForNode(n.id, contributions, factions)])
   );
   const pinned = new Set(["1-1"]);
   const actions = { openIsland() {}, togglePin() {} };
@@ -77,7 +77,7 @@ test("Map projection keeps pinning independent from global stats and filtering",
     scores,
     factions,
     { ...state, showAll: true },
-    actions,
+    actions
   );
   assert.equal(globalNodes[1].data.showAll, true);
   assert.equal(globalNodes[1].data.pinned, false);
@@ -86,7 +86,7 @@ test("Map projection keeps pinning independent from global stats and filtering",
   const edges = buildMapEdges(
     [{ id: "route", source: "1-1", target: "2-1" }],
     islands,
-    factions,
+    factions
   );
   assert.equal(edges[0].style.stroke, "#5d7a8a");
 });
