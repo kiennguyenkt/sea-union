@@ -1,25 +1,16 @@
 import { useCallback, useMemo, useRef, useState } from "react";
 import type { Edge, ReactFlowInstance, Viewport } from "@xyflow/react";
-import { islands, routes, contributions, players } from "../data/demo";
+import { islands, contributions, players } from "../data/demo";
 import { factions } from "../data/factions";
+import { nodeDetails, searchIslands } from "../domain/selectors";
+import { buildMapNodes } from "../domain/mapGraph";
 import {
-  buildLeaderboard,
-  nodeDetails,
-  scoresForNode,
-  searchIslands,
-} from "../domain/selectors";
-import { buildMapNodes, buildMapEdges } from "../domain/mapGraph";
-import type { AppNode, FactionScore } from "../types";
-
-const scoresByNode = new Map<string, FactionScore[]>(
-  islands.map((node) => [
-    node.id,
-    scoresForNode(node.id, contributions, factions),
-  ])
-);
-const edges = buildMapEdges(routes, islands, factions);
-const leaderboard = buildLeaderboard(players, contributions, factions);
-const baseCount = islands.filter((node) => node.base).length;
+  scoresByNode,
+  mapEdges,
+  leaderboard,
+  baseCount,
+} from "../domain/mapData";
+import type { AppNode } from "../types";
 
 export type TacticalMapTab = "node" | "ranking";
 
@@ -102,7 +93,7 @@ export function useTacticalMap() {
 
   return {
     nodes,
-    edges,
+    edges: mapEdges,
     factions,
     leaderboard,
     baseCount,
