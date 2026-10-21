@@ -7,6 +7,7 @@ export interface MapGraphState {
   pinned: Set<string>;
   showAll: boolean;
   filter: string;
+  debug?: boolean;
 }
 
 export interface MapGraphActions {
@@ -39,6 +40,7 @@ export function buildMapNodes(
       showAll: state.showAll,
       active: island.id === state.selected,
       dim: state.filter !== "all" && island.owner !== state.filter,
+      debug: state.debug,
       open: actions.openIsland,
       pin: actions.togglePin,
     },

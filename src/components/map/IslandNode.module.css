@@ -95,3 +95,18 @@
   width: 68px;
   height: 68px;
 }
+
+/* Debug: dấu tâm node — nằm ở 50%/50% hộp, trùng với điểm neo edge. */
+.centerDot {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 7px;
+  height: 7px;
+  margin: -3.5px;
+  border-radius: 50%;
+  background: #e5484d;
+  box-shadow: 0 0 0 1.5px #ffffff;
+  z-index: 40;
+  pointer-events: none;
+}

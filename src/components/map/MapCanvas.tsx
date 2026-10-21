@@ -2,11 +2,12 @@ import {
   ReactFlow,
   Background,
   Controls,
+  useStore,
   type Edge,
   type ReactFlowInstance,
   type Viewport,
 } from "@xyflow/react";
-import { mapBounds } from "../../data/map-layout";
+import { mapBounds, layoutNodes } from "../../data/map-layout";
 import { IslandNode } from "./IslandNode";
 import { RouteEdge } from "./RouteEdge";
 import styles from "./MapCanvas.module.css";
@@ -15,10 +16,52 @@ import type { AppNode } from "../../types";
 const nodeTypes = { island: IslandNode };
 const edgeTypes = { route: RouteEdge };
 
+// Debug: guides through node centers — the horizontal axis through "4" plus a
+// perpendicular through every central landmark, so same-row and same-column
+// nodes' center dots sit on them.
+const centralIds = layoutNodes
+  .filter((node) => node.central)
+  .map((node) => node.id);
+
+function DebugGuides() {
+  const [tx, ty, zoom] = useStore((state) => state.transform);
+  const lookup = useStore((state) => state.nodeLookup);
+  const centers = centralIds.flatMap((id) => {
+    const node = lookup.get(id);
+    const { width, height } = node?.measured ?? {};
+    if (!node || !width || !height) return [];
+    return [
+      {
+        id,
+        x: (node.internals.positionAbsolute.x + width / 2) * zoom + tx,
+        y: (node.internals.positionAbsolute.y + height / 2) * zoom + ty,
+      },
+    ];
+  });
+  const axis = centers.find((center) => center.id === "4");
+  if (!axis) return null;
+  return (
+    <>
+      <div
+        className={styles.debugLine}
+        style={{ transform: `translateY(${axis.y}px)` }}
+      />
+      {centers.map((center) => (
+        <div
+          key={center.id}
+          className={styles.debugVLine}
+          style={{ transform: `translateX(${center.x}px)` }}
+        />
+      ))}
+    </>
+  );
+}
+
 export interface MapCanvasProps {
   nodes: AppNode[];
   edges: Edge[];
   zoom: number;
+  debug: boolean;
   onInit: (instance: ReactFlowInstance<AppNode, Edge>) => void;
   onMove: (event: unknown, viewport: Viewport) => void;
 }
@@ -27,6 +70,7 @@ export function MapCanvas({
   nodes,
   edges,
   zoom,
+  debug,
   onInit,
   onMove,
 }: MapCanvasProps) {
@@ -55,6 +99,7 @@ export function MapCanvas({
       >
         <Background color="#c7ced3" gap={40} size={1} />
         <Controls showInteractive={false} />
+        {debug && <DebugGuides />}
       </ReactFlow>
       <div className={styles.zoomLabel}>{Math.round(zoom * 100)}%</div>
     </div>

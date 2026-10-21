@@ -31,6 +31,35 @@
   letter-spacing: 0;
 }
 
+.headingMeta {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.debugToggle {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  color: #8a9aa5;
+  border: 1px solid #d8dfe3;
+  background: #ffffff;
+  padding: 5px 10px;
+  border-radius: 5px;
+}
+
+.debugToggle:hover {
+  color: #33424c;
+  border-color: #b9c5cc;
+}
+
+.debugToggle.debugOn,
+.debugToggle.debugOn:hover {
+  color: #e5484d;
+  border-color: #e5484d;
+  background: #fdf1f1;
+}
+
 .mapCount {
   font-size: 11px;
   color: #6c7f8a;

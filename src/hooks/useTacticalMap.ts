@@ -31,6 +31,7 @@ export function useTacticalMap() {
   const [tab, setTab] = useState<TacticalMapTab>("node");
   const [query, setQuery] = useState("");
   const [zoom, setZoom] = useState(1);
+  const [debug, setDebug] = useState(false);
   const flowRef = useRef<ReactFlowInstance<AppNode, Edge> | null>(null);
 
   const openIsland = useCallback((id: string) => {
@@ -53,6 +54,7 @@ export function useTacticalMap() {
     (id: string) => setFilter((previous) => (previous === id ? "all" : id)),
     []
   );
+  const toggleDebug = useCallback(() => setDebug((value) => !value), []);
   const initializeFlow = useCallback(
     (instance: ReactFlowInstance<AppNode, Edge>) => {
       flowRef.current = instance;
@@ -87,10 +89,10 @@ export function useTacticalMap() {
         islands,
         scoresByNode,
         factions,
-        { selected, pinned, showAll, filter },
+        { selected, pinned, showAll, filter, debug },
         { openIsland, togglePin }
       ),
-    [selected, pinned, showAll, filter, openIsland, togglePin]
+    [selected, pinned, showAll, filter, debug, openIsland, togglePin]
   );
   const details = useMemo(
     () => nodeDetails(selected, islands, contributions, players, factions),
@@ -109,6 +111,7 @@ export function useTacticalMap() {
     pinned,
     showAll,
     filter,
+    debug,
     tab,
     query,
     zoom,
@@ -119,6 +122,7 @@ export function useTacticalMap() {
       togglePin,
       clearPins,
       selectFaction,
+      toggleDebug,
       initializeFlow,
       updateViewport,
       fitMap,

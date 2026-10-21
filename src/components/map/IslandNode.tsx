@@ -62,6 +62,7 @@ export function IslandNode({ data }: NodeProps<AppNode>) {
         </button>
       </div>
       {data.base && <div className={styles.baseNote}>BASE · BẤT KHẢ CHIẾM</div>}
+      {data.debug && <span className={styles.centerDot} aria-hidden />}
       {showStats && (
         <NodeStats
           nodeId={data.id}
