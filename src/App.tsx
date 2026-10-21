@@ -20,7 +20,12 @@ export function App() {
           onShowRanking={() => actions.setTab("ranking")}
         />
         <main className={styles.mainContent}>
-          <MapHeading islandCount={map.islandCount} baseCount={map.baseCount} />
+          <MapHeading
+            islandCount={map.islandCount}
+            baseCount={map.baseCount}
+            debug={map.debug}
+            onToggleDebug={actions.toggleDebug}
+          />
           <MapToolbar
             query={map.query}
             matches={map.matches}
@@ -34,6 +39,7 @@ export function App() {
             nodes={map.nodes}
             edges={map.edges}
             zoom={map.zoom}
+            debug={map.debug}
             onInit={actions.initializeFlow}
             onMove={actions.updateViewport}
           />

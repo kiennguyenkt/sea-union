@@ -8,6 +8,7 @@
   pointer-events: auto;
   transition: opacity 0.2s;
   --faction: #7f929e;
+  /* --icon-box được set inline từ iconBoxSize() (nguồn duy nhất). */
 }
 
 .dim {
@@ -18,13 +19,16 @@
   display: grid;
   place-items: center;
   margin: auto;
-  width: 55px;
-  height: 55px;
+  width: var(--icon-box, 55px);
+  height: var(--icon-box, 55px);
   background: #ffffff;
   border: 2px solid var(--faction);
   color: var(--faction);
   border-radius: 18px;
-  transform: rotate(45deg);
+  /* Căn tâm kim cương vào đúng tâm hộp node (= tọa độ data). Dùng transform
+     thay vì margin-top: margin của con đầu tiên bị collapse ra ngoài .island,
+     làm React Flow đo chiều cao node bị phình và lệch tâm anchor. */
+  transform: translateY(calc(42.5px - var(--icon-box, 55px) / 2)) rotate(45deg);
   box-shadow:
     0 0 0 5px rgba(130, 148, 160, 0.14),
     0 6px 18px color-mix(in srgb, var(--faction) 22%, transparent);
@@ -72,8 +76,6 @@
 }
 
 .base .islandIcon {
-  width: 66px;
-  height: 66px;
   border-radius: 18px;
   border-width: 3px;
 }
@@ -92,6 +94,19 @@
 .central .islandIcon {
   color: #bf8b1e;
   border-color: #bf8b1e;
-  width: 68px;
-  height: 68px;
+}
+
+/* Debug: dấu tâm node — nằm ở 50%/50% hộp, trùng với điểm neo edge. */
+.centerDot {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 7px;
+  height: 7px;
+  margin: -3.5px;
+  border-radius: 50%;
+  background: #e5484d;
+  box-shadow: 0 0 0 1.5px #ffffff;
+  z-index: 40;
+  pointer-events: none;
 }

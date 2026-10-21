@@ -79,6 +79,7 @@ export type IslandNodeData = Island & {
   showAll: boolean;
   active: boolean;
   dim: boolean;
+  debug?: boolean;
   open: (id: string) => void;
   pin: (id: string) => void;
   [key: string]: unknown;

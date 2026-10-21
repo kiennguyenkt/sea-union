@@ -7,6 +7,11 @@ import { buildLeaderboard, scoresForNode as computeScores } from "./selectors";
 const leaderboard = buildLeaderboard(players, contributions, factions);
 const scoresForNode = (id: string) =>
   computeScores(id, contributions, factions);
+const at = (id: string) => {
+  const found = islands.find((n) => n.id === id);
+  if (!found) throw new Error(`Island ${id} not found`);
+  return found.position;
+};
 test("Map has unique nodes, four unclaimable bases, and valid routes", () => {
   const ids = new Set(islands.map((n) => n.id));
   assert.equal(ids.size, islands.length);
@@ -32,11 +37,6 @@ test("Map has unique nodes, four unclaimable bases, and valid routes", () => {
   assert.equal(visited.size, islands.length);
 });
 test("Screenshot landmarks use the central axis and matching opposite sectors", () => {
-  const at = (id: string) => {
-    const found = islands.find((n) => n.id === id);
-    if (!found) throw new Error(`Island ${id} not found`);
-    return found.position;
-  };
   assert.deepEqual(at("4"), { x: 0, y: 0 });
   for (const node of islands.filter((n) => n.central))
     assert.equal(node.position.y, 0);
@@ -52,6 +52,36 @@ test("Screenshot landmarks use the central axis and matching opposite sectors", 
   }
   assert.equal(at("base-west").y, at("base-east").y);
   assert.equal(at("base-north").x, at("base-south").x);
+});
+test("Islands confirmed by the owner sit exactly on their vertical columns", () => {
+  // Each group shares one x — the columns the debug perpendiculars draw.
+  for (const group of [
+    ["1-17", "1-21"],
+    ["1-9", "1-1", "1-3"],
+    ["2-41", "2-50", "2-21", "2-24"],
+    ["2-46", "3-7", "2-17"],
+    ["2-11", "2-40", "2-39", "3-5", "2-31", "2-8"],
+    ["2-15", "2-22", "3-3"],
+    ["2-19", "2-44", "3-4"],
+    ["2-33", "3-8", "2-3"],
+    ["2-16", "2-42", "2-43", "3-6", "2-9", "2-27", "2-1"],
+    ["2-45", "2-37", "2-2", "2-26"],
+  ])
+    for (const id of group)
+      assert.equal(at(id).x, at(group[0]).x, `${id} is off its column`);
+  // West columns and their east mirrors are symmetric about "4".
+  for (const [left, right] of [
+    ["2-41", "2-45"],
+    ["2-50", "2-37"],
+    ["2-21", "2-2"],
+    ["2-24", "2-26"],
+    ["2-15", "2-19"],
+    ["2-22", "2-44"],
+    ["3-7", "3-8"],
+    ["3-5", "3-6"],
+    ["3-3", "3-4"],
+  ])
+    assert.equal(at(left).x, -at(right).x, `${left}/${right} not mirrored`);
 });
 test("Faction scores and leaderboard reconcile with player contributions", () => {
   for (const island of islands.filter((n) => !n.base)) {
