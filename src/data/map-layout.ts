@@ -1,6 +1,11 @@
 // Traced from specs/map-{left,mid,right}.PNG, in the middle screenshot's coordinates.
 // Left image offset: (-818,-30); right: (+710,-30). Names and scores are not transcribed.
 // ID 4 is the central landmark; 3-1 to 3-8 are the central axis landmarks.
+// Nodes on a landmark's x form a vertical column; the owner confirmed the
+// groups on 2026-10-21, so traced x's are snapped onto exact columns:
+// {2-41,2-50,2-21,2-24} -> -150, mirrored {2-45,2-37,2-2,2-26} -> 974,
+// {2-15,2-22} -> 3-3's column, {2-19,2-44} -> 3-4's, {2-33,2-3} -> 3-8 (884).
+// Locked by the "island columns" test in domain/data.test.ts.
 import type { LayoutNode, Position, Route } from "../types";
 
 const outer: [number, number, number][] = [
@@ -31,7 +36,7 @@ const outer: [number, number, number][] = [
 ];
 const inner: [number, number, number][] = [
   [1, 770, 1445],
-  [2, 967, 1085],
+  [2, 974, 1085],
   [3, 884, 1175],
   [4, 1112, 1250],
   [5, 1112, 1085],
@@ -44,18 +49,18 @@ const inner: [number, number, number][] = [
   [12, 493, 1265],
   [13, 412, 565],
   [14, 412, 455],
-  [15, 192, 840],
+  [15, 168, 840],
   [16, 770, 500],
   [17, -60, 1175],
   [18, 1112, 970],
-  [19, 632, 1100],
+  [19, 656, 1100],
   [20, 330, 1265],
-  [21, -143, 1085],
-  [22, 192, 1100],
+  [21, -150, 1085],
+  [22, 168, 1100],
   [23, 330, 1100],
-  [24, -157, 1295],
+  [24, -150, 1295],
   [25, -288, 1250],
-  [26, 982, 1295],
+  [26, 974, 1295],
   [27, 770, 1265],
   [28, -288, 1085],
   [29, 412, 1380],
@@ -66,20 +71,20 @@ const inner: [number, number, number][] = [
   [34, 493, 680],
   [35, 330, 680],
   [36, 1112, 865],
-  [37, 967, 865],
+  [37, 974, 865],
   [38, 330, 840],
   [39, 54, 840],
   [40, 54, 680],
-  [41, -157, 645],
+  [41, -150, 645],
   [42, 770, 680],
   [43, 770, 840],
-  [44, 632, 840],
-  [45, 982, 645],
+  [44, 656, 840],
+  [45, 974, 645],
   [46, -60, 770],
   [47, 493, 840],
   [48, 54, 1445],
   [49, -288, 700],
-  [50, -143, 865],
+  [50, -150, 865],
   [51, -288, 865],
   [52, 1112, 700],
 ];
@@ -92,7 +97,7 @@ const center: [string, number][] = [
   ["3-2", 542],
   ["3-4", 656],
   ["3-6", 770],
-  ["3-8", 882],
+  ["3-8", 884],
 ];
 const position = (x: number, y: number): Position => ({
   x: (x - 412) * 2,
@@ -177,6 +182,9 @@ const chains: string[][] = [
   ["2-27", "2-1"],
   ["2-48", "2-29", "2-1"],
   ["2-48", "2-7", "2-1"],
+  // Extra links confirmed by the project owner (2026-10-21).
+  ["2-2", "2-3"],
+  ["2-20", "2-23"],
   // Nine landmarks on the central axis, including the actual center (4).
   ["2-32", ...center.map(([id]) => id), "2-18"],
   ["2-15", "3-7", "2-31"],

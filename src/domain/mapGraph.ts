@@ -1,6 +1,22 @@
 // Translate domain data to React Flow models without rendering components.
 import type { Edge } from "@xyflow/react";
-import type { AppNode, Faction, FactionScore, Island, Route } from "../types";
+import type {
+  AppNode,
+  Faction,
+  FactionScore,
+  Island,
+  LayoutNode,
+  Route,
+} from "../types";
+
+// Icon box size (px) per node variant — single source of truth; IslandNode
+// consumes it via the inline --icon-box CSS variable and centers the icon on
+// the node position, so edges anchored at node centers hit the icon centers.
+export function iconBoxSize(
+  node: Pick<LayoutNode, "base" | "central">
+): number {
+  return node.base ? 66 : node.central ? 68 : 55;
+}
 
 export interface MapGraphState {
   selected: string | null;

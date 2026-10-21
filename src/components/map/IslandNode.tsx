@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Handle, Position, type NodeProps } from "@xyflow/react";
 import { Anchor, Castle, Pin } from "lucide-react";
+import { iconBoxSize } from "../../domain/mapGraph";
 import { NodeStats } from "./NodeStats";
 import styles from "./IslandNode.module.css";
 import type { AppNode } from "../../types";
@@ -30,6 +31,7 @@ export function IslandNode({ data }: NodeProps<AppNode>) {
       style={
         {
           "--faction": data.factionInfo?.color || "#97acbb",
+          "--icon-box": `${iconBoxSize(data)}px`,
         } as React.CSSProperties
       }
       onMouseEnter={() => setHovered(true)}
