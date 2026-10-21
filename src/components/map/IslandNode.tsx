@@ -62,7 +62,15 @@ export function IslandNode({ data }: NodeProps<AppNode>) {
         </button>
       </div>
       {data.base && <div className={styles.baseNote}>BASE · BẤT KHẢ CHIẾM</div>}
-      {showStats && <NodeStats name={data.name} scores={data.scores} />}
+      {showStats && (
+        <NodeStats
+          nodeId={data.id}
+          name={data.name}
+          scores={data.scores}
+          pinned={data.pinned}
+          onTogglePin={() => data.pin(data.id)}
+        />
+      )}
       <Handle
         type="source"
         position={Position.Bottom}

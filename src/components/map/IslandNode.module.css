@@ -3,6 +3,9 @@
   height: 85px;
   text-align: center;
   position: relative;
+  /* React Flow tắt pointer-events trên node wrapper (nodesDraggable/elementsSelectable = false);
+     bật lại để hover hiện popup điểm và các nút bấm được */
+  pointer-events: auto;
   transition: opacity 0.2s;
   --faction: #7f929e;
 }
