@@ -1,5 +1,5 @@
 import { useCallback, useMemo, useRef, useState } from "react";
-import type { Edge, ReactFlowInstance, Viewport } from "@xyflow/react";
+import type { Edge, ReactFlowInstance } from "@xyflow/react";
 import { islands, contributions, players } from "../data/demo";
 import { factions } from "../data/factions";
 import { nodeDetails, searchIslands } from "../domain/selectors";
@@ -21,7 +21,6 @@ export function useTacticalMap() {
   const [filter, setFilter] = useState("all");
   const [tab, setTab] = useState<TacticalMapTab>("node");
   const [query, setQuery] = useState("");
-  const [zoom, setZoom] = useState(1);
   const [debug, setDebug] = useState(false);
   const flowRef = useRef<ReactFlowInstance<AppNode, Edge> | null>(null);
 
@@ -50,10 +49,6 @@ export function useTacticalMap() {
     (instance: ReactFlowInstance<AppNode, Edge>) => {
       flowRef.current = instance;
     },
-    []
-  );
-  const updateViewport = useCallback(
-    (_: unknown, viewport: Viewport) => setZoom(viewport.zoom),
     []
   );
   const fitMap = useCallback(
@@ -105,7 +100,6 @@ export function useTacticalMap() {
     debug,
     tab,
     query,
-    zoom,
     matches,
     actions: {
       openIsland,
@@ -115,7 +109,6 @@ export function useTacticalMap() {
       selectFaction,
       toggleDebug,
       initializeFlow,
-      updateViewport,
       fitMap,
       focusIsland,
       setShowAll,

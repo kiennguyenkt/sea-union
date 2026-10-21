@@ -38,10 +38,8 @@ export function App() {
           <MapCanvas
             nodes={map.nodes}
             edges={map.edges}
-            zoom={map.zoom}
             debug={map.debug}
             onInit={actions.initializeFlow}
-            onMove={actions.updateViewport}
           />
           <FactionLegend
             factions={map.factions}

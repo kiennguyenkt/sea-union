@@ -5,7 +5,6 @@ import {
   useStore,
   type Edge,
   type ReactFlowInstance,
-  type Viewport,
 } from "@xyflow/react";
 import { mapBounds, layoutNodes } from "../../data/map-layout";
 import { IslandNode } from "./IslandNode";
@@ -57,23 +56,19 @@ function DebugGuides() {
   );
 }
 
+function ZoomLabel() {
+  const zoom = useStore((state) => state.transform[2]);
+  return <div className={styles.zoomLabel}>{Math.round(zoom * 100)}%</div>;
+}
+
 export interface MapCanvasProps {
   nodes: AppNode[];
   edges: Edge[];
-  zoom: number;
   debug: boolean;
   onInit: (instance: ReactFlowInstance<AppNode, Edge>) => void;
-  onMove: (event: unknown, viewport: Viewport) => void;
 }
 
-export function MapCanvas({
-  nodes,
-  edges,
-  zoom,
-  debug,
-  onInit,
-  onMove,
-}: MapCanvasProps) {
+export function MapCanvas({ nodes, edges, debug, onInit }: MapCanvasProps) {
   return (
     <div className={styles.mapCanvas}>
       <ReactFlow
@@ -93,15 +88,14 @@ export function MapCanvas({
         elementsSelectable={false}
         deleteKeyCode={null}
         onInit={onInit}
-        onMove={onMove}
         colorMode="light"
         proOptions={{ hideAttribution: true }}
       >
         <Background color="#c7ced3" gap={40} size={1} />
         <Controls showInteractive={false} />
         {debug && <DebugGuides />}
+        <ZoomLabel />
       </ReactFlow>
-      <div className={styles.zoomLabel}>{Math.round(zoom * 100)}%</div>
     </div>
   );
 }
