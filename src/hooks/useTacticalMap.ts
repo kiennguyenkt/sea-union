@@ -22,7 +22,7 @@ export function useTacticalMap() {
   const [tab, setTab] = useState<TacticalMapTab>("node");
   const [debug, setDebug] = useState(false);
   const [query, setQuery] = useState("");
-  const { fitMap, centerOn } = useMapViewport();
+  const { centerOn } = useMapViewport();
   const matches = useMemo(() => searchIslands(query, ownedIslands), [query]);
 
   const openIsland = useCallback((id: string) => {
@@ -107,7 +107,6 @@ export function useTacticalMap() {
       clearPins,
       selectFaction,
       toggleDebug,
-      fitMap,
       focusIsland,
       setShowAll,
       setTab,
