@@ -30,10 +30,13 @@ export function FactionLegend({
           {faction.name}
         </button>
       ))}
-      <span className={styles.neutral}>
+      <button
+        className={`${styles.neutral} ${filter === "neutral" ? styles.chosen : ""}`}
+        onClick={() => onSelectFaction("neutral")}
+      >
         <i />
         Trung lập
-      </span>
+      </button>
       <span className={styles.legendHelp}>Kéo để di chuyển · Cuộn để zoom</span>
     </footer>
   );

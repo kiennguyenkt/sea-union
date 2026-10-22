@@ -111,3 +111,71 @@ test("Map projection keeps pinning independent from global stats and filtering",
   );
   assert.equal(sameFactionEdges[0]?.style?.stroke, "#123456");
 });
+test("Neutral filter dims owned islands and never highlights edges", () => {
+  const neutral: Island = {
+    id: "3-9",
+    name: "Đảo Trung",
+    position: { x: 90, y: 90 },
+    owner: null,
+    boss: null,
+    level: 60,
+  };
+  const withNeutral = [...islands, neutral];
+  const scoresByNode = new Map(
+    withNeutral.map((island) => [
+      island.id,
+      scoresForNode(island.id, contributions, factions),
+    ])
+  );
+  const actions = { openIsland: () => {}, togglePin: () => {} };
+  const state = {
+    selected: null,
+    pinned: new Set<string>(),
+    showAll: false,
+  };
+  const nodes = buildMapNodes(
+    withNeutral,
+    scoresByNode,
+    factions,
+    { ...state, filter: "neutral" },
+    actions
+  );
+  const byId = new Map(nodes.map((n) => [n.id, n]));
+  assert.equal(byId.get("3-9")?.data.dim, false);
+  assert.equal(byId.get("1-1")?.data.dim, true);
+  const neutralRoutes = [
+    { source: "3-9", target: "3-9" },
+    { source: "3-9", target: "1-1" },
+    { source: "1-1", target: "2-1" },
+  ];
+  const resting = buildMapEdges(
+    neutralRoutes,
+    withNeutral,
+    factions,
+    "neutral"
+  );
+  assert.equal(resting[0]?.style?.strokeDasharray, "7 7");
+  assert.equal(resting[0]?.style?.opacity, 0.45);
+  assert.equal(resting[1]?.style?.strokeDasharray, "7 7");
+  assert.equal(resting[2]?.style?.strokeDasharray, undefined);
+  assert.equal(
+    buildMapEdges(neutralRoutes, withNeutral, factions)[0]?.style
+      ?.strokeDasharray,
+    "7 7"
+  );
+  const highlighted = buildMapEdges(
+    [{ source: "1-1", target: "1-1" }],
+    islands,
+    factions,
+    "a"
+  );
+  assert.equal(highlighted[0]?.style?.opacity, 1);
+  assert.equal(highlighted[0]?.style?.strokeWidth, 3);
+  const dimmed = buildMapEdges(
+    [{ source: "1-1", target: "2-1" }],
+    islands,
+    factions,
+    "a"
+  );
+  assert.equal(dimmed[0]?.style?.opacity, 0.12);
+});

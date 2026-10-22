@@ -1,14 +1,9 @@
 import { useCallback, useMemo, useState } from "react";
-import { islands, contributions, players } from "../data/demo";
+import { islands, routes, contributions, players } from "../data/demo";
 import { factions } from "../data/factions";
 import { nodeDetails, searchIslands } from "../domain/selectors";
-import { buildMapNodes } from "../domain/mapGraph";
-import {
-  scoresByNode,
-  mapEdges,
-  leaderboard,
-  baseCount,
-} from "../domain/mapData";
+import { buildMapEdges, buildMapNodes } from "../domain/mapGraph";
+import { scoresByNode, leaderboard, baseCount } from "../domain/mapData";
 import { useMapViewport } from "./useMapViewport";
 
 export type TacticalMapTab = "node" | "ranking";
@@ -67,6 +62,10 @@ export function useTacticalMap() {
       ),
     [selected, pinned, showAll, filter, debug, openIsland, togglePin]
   );
+  const edges = useMemo(
+    () => buildMapEdges(routes, islands, factions, filter),
+    [filter]
+  );
   const details = useMemo(
     () => nodeDetails(selected, islands, contributions, players, factions),
     [selected]
@@ -74,7 +73,7 @@ export function useTacticalMap() {
 
   return {
     nodes,
-    edges: mapEdges,
+    edges,
     factions,
     leaderboard,
     baseCount,

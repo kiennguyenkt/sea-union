@@ -91,11 +91,6 @@
   margin-top: 4px;
 }
 
-.central .islandIcon {
-  color: #bf8b1e;
-  border-color: #bf8b1e;
-}
-
 /* Debug: dấu tâm node — nằm ở 50%/50% hộp, trùng với điểm neo edge. */
 .centerDot {
   position: absolute;

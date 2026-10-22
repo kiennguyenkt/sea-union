@@ -38,6 +38,8 @@ export function buildMapNodes(
   state: MapGraphState,
   actions: MapGraphActions
 ): AppNode[] {
+  // Filter "neutral" targets islands without an owner instead of a faction id.
+  const filterOwner = state.filter === "neutral" ? null : state.filter;
   return islands.map((island) => ({
     id: island.id,
     type: "island" as const,
@@ -55,7 +57,7 @@ export function buildMapNodes(
       pinned: state.pinned.has(island.id),
       showAll: state.showAll,
       active: island.id === state.selected,
-      dim: state.filter !== "all" && island.owner !== state.filter,
+      dim: state.filter !== "all" && island.owner !== filterOwner,
       debug: state.debug,
       open: actions.openIsland,
       pin: actions.togglePin,
@@ -66,9 +68,14 @@ export function buildMapNodes(
 export function buildMapEdges(
   routes: Route[],
   islands: Island[],
-  factions: Faction[]
+  factions: Faction[],
+  filter = "all"
 ): Edge[] {
   const byId = new Map(islands.map((island) => [island.id, island]));
+  // Edges only react to a faction filter; "neutral" highlights nodes only, so
+  // its routes (and the "all" view) keep the resting style.
+  const highlightFaction =
+    filter !== "all" && filter !== "neutral" ? filter : null;
   return routes.map((route) => {
     const source = byId.get(route.source);
     const target = byId.get(route.target);
@@ -76,6 +83,12 @@ export function buildMapEdges(
       source?.owner && source.owner === target?.owner
         ? factions.find((entry) => entry.id === source.owner)
         : null;
+    // Neutral islands answer to no base, so any route touching one draws
+    // dashed in every view.
+    const neutralLink =
+      source && target && (!source.owner || !target.owner) ? "7 7" : undefined;
+    const matched =
+      highlightFaction !== null && faction?.id === highlightFaction;
     return {
       ...route,
       id: `${route.source}__${route.target}`,
@@ -85,8 +98,9 @@ export function buildMapEdges(
       selectable: false,
       style: {
         stroke: faction?.color ?? "#5d7a8a",
-        strokeWidth: 2,
-        opacity: 0.45,
+        strokeWidth: matched ? 3 : 2,
+        opacity: matched ? 1 : highlightFaction ? 0.12 : 0.45,
+        strokeDasharray: neutralLink,
       },
     };
   });
