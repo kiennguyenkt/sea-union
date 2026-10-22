@@ -1,4 +1,5 @@
 import { createRoot } from "react-dom/client";
+import { ReactFlowProvider } from "@xyflow/react";
 import { App } from "./App";
 import "@xyflow/react/dist/style.css";
 import "./style.css";
@@ -8,4 +9,8 @@ if (!rootElement) {
   throw new Error("Failed to find root element");
 }
 
-createRoot(rootElement).render(<App />);
+createRoot(rootElement).render(
+  <ReactFlowProvider>
+    <App />
+  </ReactFlowProvider>
+);

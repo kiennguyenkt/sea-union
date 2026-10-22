@@ -1,5 +1,4 @@
-import { useCallback, useMemo, useRef, useState } from "react";
-import type { Edge, ReactFlowInstance } from "@xyflow/react";
+import { useCallback, useMemo, useState } from "react";
 import { islands, contributions, players } from "../data/demo";
 import { factions } from "../data/factions";
 import { nodeDetails, searchIslands } from "../domain/selectors";
@@ -10,7 +9,7 @@ import {
   leaderboard,
   baseCount,
 } from "../domain/mapData";
-import type { AppNode } from "../types";
+import { useMapViewport } from "./useMapViewport";
 
 export type TacticalMapTab = "node" | "ranking";
 
@@ -20,9 +19,10 @@ export function useTacticalMap() {
   const [showAll, setShowAll] = useState(false);
   const [filter, setFilter] = useState("all");
   const [tab, setTab] = useState<TacticalMapTab>("node");
-  const [query, setQuery] = useState("");
   const [debug, setDebug] = useState(false);
-  const flowRef = useRef<ReactFlowInstance<AppNode, Edge> | null>(null);
+  const [query, setQuery] = useState("");
+  const { fitMap, centerOn } = useMapViewport();
+  const matches = useMemo(() => searchIslands(query, islands), [query]);
 
   const openIsland = useCallback((id: string) => {
     setSelected(id);
@@ -45,28 +45,15 @@ export function useTacticalMap() {
     []
   );
   const toggleDebug = useCallback(() => setDebug((value) => !value), []);
-  const initializeFlow = useCallback(
-    (instance: ReactFlowInstance<AppNode, Edge>) => {
-      flowRef.current = instance;
-    },
-    []
-  );
-  const fitMap = useCallback(
-    () => flowRef.current?.fitView({ padding: 0.15, duration: 500 }),
-    []
-  );
   const focusIsland = useCallback(
     (id: string) => {
       const island = islands.find((node) => node.id === id);
       if (!island) return;
       openIsland(id);
       setQuery("");
-      flowRef.current?.setCenter(island.position.x, island.position.y, {
-        zoom: 1,
-        duration: 500,
-      });
+      centerOn(island.position.x, island.position.y);
     },
-    [openIsland]
+    [openIsland, setQuery, centerOn]
   );
 
   const nodes = useMemo(
@@ -84,7 +71,6 @@ export function useTacticalMap() {
     () => nodeDetails(selected, islands, contributions, players, factions),
     [selected]
   );
-  const matches = useMemo(() => searchIslands(query, islands), [query]);
 
   return {
     nodes,
@@ -108,7 +94,6 @@ export function useTacticalMap() {
       clearPins,
       selectFaction,
       toggleDebug,
-      initializeFlow,
       fitMap,
       focusIsland,
       setShowAll,

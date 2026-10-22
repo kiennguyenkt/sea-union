@@ -4,7 +4,6 @@ import {
   Controls,
   useStore,
   type Edge,
-  type ReactFlowInstance,
 } from "@xyflow/react";
 import { mapBounds, layoutNodes } from "../../data/map-layout";
 import { IslandNode } from "./IslandNode";
@@ -65,10 +64,9 @@ export interface MapCanvasProps {
   nodes: AppNode[];
   edges: Edge[];
   debug: boolean;
-  onInit: (instance: ReactFlowInstance<AppNode, Edge>) => void;
 }
 
-export function MapCanvas({ nodes, edges, debug, onInit }: MapCanvasProps) {
+export function MapCanvas({ nodes, edges, debug }: MapCanvasProps) {
   return (
     <div className={styles.mapCanvas}>
       <ReactFlow
@@ -87,7 +85,6 @@ export function MapCanvas({ nodes, edges, debug, onInit }: MapCanvasProps) {
         edgesReconnectable={false}
         elementsSelectable={false}
         deleteKeyCode={null}
-        onInit={onInit}
         colorMode="light"
         proOptions={{ hideAttribution: true }}
       >

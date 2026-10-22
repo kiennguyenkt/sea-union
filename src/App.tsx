@@ -39,7 +39,6 @@ export function App() {
             nodes={map.nodes}
             edges={map.edges}
             debug={map.debug}
-            onInit={actions.initializeFlow}
           />
           <FactionLegend
             factions={map.factions}
