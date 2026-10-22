@@ -21,6 +21,7 @@ const islands: Island[] = [
     owner: "a",
     boss: null,
     level: 35,
+    claimThreshold: 1,
   },
   {
     id: "2-1",
@@ -29,6 +30,7 @@ const islands: Island[] = [
     owner: "b",
     boss: null,
     level: 60,
+    claimThreshold: 1,
   },
 ];
 const players: Player[] = [
@@ -65,6 +67,16 @@ test("Queries prepare detail and allocation data without mutating the source", (
   );
   assert.equal(board[1].id, "p2");
   assert.equal(board[1].score, 200);
+  const flagged = nodeDetails(
+    "1-1",
+    islands,
+    contributions,
+    players,
+    factions,
+    new Map([["1-1", new Set(["b"])]])
+  );
+  assert.equal(flagged?.scores.find((f) => f.id === "a")?.connected, false);
+  assert.equal(flagged?.scores.find((f) => f.id === "b")?.connected, true);
 });
 test("Search handles whitespace, casing, indexes, empty queries and result limits", () => {
   assert.deepEqual(searchIslands("   ", islands), []);
@@ -119,6 +131,7 @@ test("Neutral filter dims owned islands and never highlights edges", () => {
     owner: null,
     boss: null,
     level: 60,
+    claimThreshold: 1,
   };
   const withNeutral = [...islands, neutral];
   const scoresByNode = new Map(

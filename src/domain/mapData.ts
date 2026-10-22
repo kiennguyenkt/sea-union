@@ -1,7 +1,8 @@
-import { islands, contributions, players } from "../data/demo";
+import { islands, routes, contributions, players } from "../data/demo";
 import { factions } from "../data/factions";
+import { deriveClaims } from "./claims";
 import { buildLeaderboard, scoresForNode } from "./selectors";
-import type { FactionScore } from "../types";
+import type { FactionScore, Island } from "../types";
 
 export const scoresByNode = new Map<string, FactionScore[]>(
   islands.map((node) => [
@@ -9,5 +10,12 @@ export const scoresByNode = new Map<string, FactionScore[]>(
     scoresForNode(node.id, contributions, factions),
   ])
 );
+// Owner comes from the claim rule, so the demo data never stores it for
+// non-base nodes; the map panels all read these islands instead.
+export const claims = deriveClaims(islands, routes, contributions);
+export const ownedIslands: Island[] = islands.map((node) => ({
+  ...node,
+  owner: claims.ownerByNode.get(node.id) ?? null,
+}));
 export const leaderboard = buildLeaderboard(players, contributions, factions);
 export const baseCount = islands.filter((node) => node.base).length;

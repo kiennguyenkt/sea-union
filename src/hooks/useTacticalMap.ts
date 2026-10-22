@@ -1,9 +1,15 @@
 import { useCallback, useMemo, useState } from "react";
-import { islands, routes, contributions, players } from "../data/demo";
+import { routes, contributions, players } from "../data/demo";
 import { factions } from "../data/factions";
 import { nodeDetails, searchIslands } from "../domain/selectors";
 import { buildMapEdges, buildMapNodes } from "../domain/mapGraph";
-import { scoresByNode, leaderboard, baseCount } from "../domain/mapData";
+import {
+  scoresByNode,
+  leaderboard,
+  baseCount,
+  ownedIslands,
+  claims,
+} from "../domain/mapData";
 import { useMapViewport } from "./useMapViewport";
 
 export type TacticalMapTab = "node" | "ranking";
@@ -17,7 +23,7 @@ export function useTacticalMap() {
   const [debug, setDebug] = useState(false);
   const [query, setQuery] = useState("");
   const { fitMap, centerOn } = useMapViewport();
-  const matches = useMemo(() => searchIslands(query, islands), [query]);
+  const matches = useMemo(() => searchIslands(query, ownedIslands), [query]);
 
   const openIsland = useCallback((id: string) => {
     setSelected(id);
@@ -42,7 +48,7 @@ export function useTacticalMap() {
   const toggleDebug = useCallback(() => setDebug((value) => !value), []);
   const focusIsland = useCallback(
     (id: string) => {
-      const island = islands.find((node) => node.id === id);
+      const island = ownedIslands.find((node) => node.id === id);
       if (!island) return;
       openIsland(id);
       setQuery("");
@@ -54,7 +60,7 @@ export function useTacticalMap() {
   const nodes = useMemo(
     () =>
       buildMapNodes(
-        islands,
+        ownedIslands,
         scoresByNode,
         factions,
         { selected, pinned, showAll, filter, debug },
@@ -63,11 +69,19 @@ export function useTacticalMap() {
     [selected, pinned, showAll, filter, debug, openIsland, togglePin]
   );
   const edges = useMemo(
-    () => buildMapEdges(routes, islands, factions, filter),
+    () => buildMapEdges(routes, ownedIslands, factions, filter),
     [filter]
   );
   const details = useMemo(
-    () => nodeDetails(selected, islands, contributions, players, factions),
+    () =>
+      nodeDetails(
+        selected,
+        ownedIslands,
+        contributions,
+        players,
+        factions,
+        claims.connectedByNode
+      ),
     [selected]
   );
 
@@ -77,7 +91,7 @@ export function useTacticalMap() {
     factions,
     leaderboard,
     baseCount,
-    islandCount: islands.length - baseCount,
+    islandCount: ownedIslands.length - baseCount,
     details,
     pinned,
     showAll,

@@ -59,12 +59,19 @@ export function nodeDetails(
   islands: Island[],
   contributions: Contribution[],
   players: Player[],
-  factions: Faction[]
+  factions: Faction[],
+  connectedByNode?: Map<string, Set<string>>
 ): NodeDetailData | null {
   if (!nodeId) return null;
   const island = islands.find((node) => node.id === nodeId);
   if (!island) return null;
-  const scores = scoresForNode(nodeId, contributions, factions);
+  const connected = connectedByNode?.get(nodeId);
+  const scores = scoresForNode(nodeId, contributions, factions).map(
+    (faction) => ({
+      ...faction,
+      connected: connected ? connected.has(faction.id) : undefined,
+    })
+  );
   const attackers = contributions
     .filter((entry) => entry.nodeId === nodeId)
     .sort((a, b) => b.score - a.score)

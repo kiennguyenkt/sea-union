@@ -15,6 +15,9 @@ export interface Faction {
 
 export interface FactionScore extends Faction {
   score: number;
+  // False when the faction lost its base link, suspending the score for the
+  // node's claim; undefined where the rule was not evaluated.
+  connected?: boolean;
 }
 
 export interface LayoutNode {
@@ -32,6 +35,8 @@ export interface Island extends LayoutNode {
   owner: string | null;
   boss: string | null;
   level: number;
+  // Points a faction needs to claim the node (see domain/claims.ts).
+  claimThreshold: number;
 }
 
 export interface Route {

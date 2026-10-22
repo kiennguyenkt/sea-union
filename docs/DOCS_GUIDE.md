@@ -6,14 +6,15 @@
 
 ## Tài liệu hiện có
 
-| Tài liệu                               | Vai trò                                                                     | Khi nào cập nhật                                         |
-| -------------------------------------- | --------------------------------------------------------------------------- | -------------------------------------------------------- |
-| [PROJECT_INTENT.md](PROJECT_INTENT.md) | Mục tiêu sản phẩm, nhu cầu, ràng buộc và phạm vi mong muốn                  | Khi chủ dự án bổ sung hoặc thay đổi yêu cầu              |
-| [docs/RESEARCH.md](docs/RESEARCH.md)   | Kết quả tìm hiểu, nguồn tham khảo, quyết định công nghệ và đề xuất kỹ thuật | Khi tìm hiểu giải pháp hoặc chốt/thay đổi hướng kỹ thuật |
-| [specs/](specs/)                       | Ảnh tham chiếu từ game, làm căn cứ cho map và dữ liệu điểm                  | Khi có thêm ảnh hoặc cập nhật nguồn từ game              |
-| [DOCS_GUIDE.md](DOCS_GUIDE.md)         | Chỉ dẫn đọc và tổ chức tài liệu                                             | Khi thêm, chuyển hoặc đổi vai trò tài liệu               |
-| [NEED_CONFIRM.md](NEED_CONFIRM.md)     | Câu hỏi cần chủ dự án xác nhận, trạng thái và phương án tạm                 | Ghi câu hỏi trước khi hỏi; cập nhật khi có câu trả lời   |
-| [README.md](README.md)                 | Cách chạy demo, tương tác đã triển khai và giới hạn dữ liệu                 | Khi thay đổi demo hoặc lệnh chạy                         |
+| Tài liệu                               | Vai trò                                                                      | Khi nào cập nhật                                         |
+| -------------------------------------- | ---------------------------------------------------------------------------- | -------------------------------------------------------- |
+| [PROJECT_INTENT.md](PROJECT_INTENT.md) | Mục tiêu sản phẩm, nhu cầu, ràng buộc và phạm vi mong muốn                   | Khi chủ dự án bổ sung hoặc thay đổi yêu cầu              |
+| [docs/CLAIM_RULES.md](CLAIM_RULES.md)  | Quy tắc game về chiếm cứ điểm: ngưỡng, đường nối, tạm ngắt, derive ownership | Khi chủ dự án bổ sung hoặc thay đổi rule                 |
+| [docs/RESEARCH.md](docs/RESEARCH.md)   | Kết quả tìm hiểu, nguồn tham khảo, quyết định công nghệ và đề xuất kỹ thuật  | Khi tìm hiểu giải pháp hoặc chốt/thay đổi hướng kỹ thuật |
+| [specs/](specs/)                       | Ảnh tham chiếu từ game, làm căn cứ cho map và dữ liệu điểm                   | Khi có thêm ảnh hoặc cập nhật nguồn từ game              |
+| [DOCS_GUIDE.md](DOCS_GUIDE.md)         | Chỉ dẫn đọc và tổ chức tài liệu                                              | Khi thêm, chuyển hoặc đổi vai trò tài liệu               |
+| [NEED_CONFIRM.md](NEED_CONFIRM.md)     | Câu hỏi cần chủ dự án xác nhận, trạng thái và phương án tạm                  | Ghi câu hỏi trước khi hỏi; cập nhật khi có câu trả lời   |
+| [README.md](README.md)                 | Cách chạy demo, tương tác đã triển khai và giới hạn dữ liệu                  | Khi thay đổi demo hoặc lệnh chạy                         |
 
 Thư mục `specs/` hiện chứa ảnh tham chiếu; tên thư mục không có nghĩa là đã có specs triển khai.
 
@@ -22,7 +23,8 @@ Thư mục `specs/` hiện chứa ảnh tham chiếu; tên thư mục không có
 1. Đọc guide này để biết tài liệu nào chứa thông tin cần thiết.
 2. Đọc `PROJECT_INTENT.md` để hiểu mục tiêu và phạm vi.
 3. Đọc `docs/RESEARCH.md` khi làm việc với giải pháp kỹ thuật.
-4. Xem các ảnh được liên kết khi công việc liên quan tới bố cục map hoặc dữ liệu game.
+4. Đọc `docs/CLAIM_RULES.md` khi làm việc với ownership, điểm claim hoặc dữ liệu demo.
+5. Xem các ảnh được liên kết khi công việc liên quan tới bố cục map hoặc dữ liệu game.
 
 ## Cách ghi nội dung mới
 
