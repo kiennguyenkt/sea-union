@@ -1,4 +1,5 @@
 import { Search, Layers, Crosshair } from "lucide-react";
+import { useFitMap } from "../../hooks/useFitMap";
 import styles from "./MapToolbar.module.css";
 import type { Island } from "../../types";
 
@@ -9,7 +10,6 @@ export interface MapToolbarProps {
   onQueryChange: (query: string) => void;
   onFocusIsland: (id: string) => void;
   onShowAllChange: (showAll: boolean) => void;
-  onFitMap: () => void;
 }
 
 export function MapToolbar({
@@ -19,8 +19,8 @@ export function MapToolbar({
   onQueryChange,
   onFocusIsland,
   onShowAllChange,
-  onFitMap,
 }: MapToolbarProps) {
+  const fitMap = useFitMap();
   return (
     <div className={styles.toolbar}>
       <div className={styles.search}>
@@ -56,7 +56,7 @@ export function MapToolbar({
         />
         <span className={styles.switch} />
       </label>
-      <button className={styles.fit} onClick={onFitMap}>
+      <button className={styles.fit} onClick={fitMap}>
         <Crosshair size={16} /> Toàn cảnh
       </button>
     </div>

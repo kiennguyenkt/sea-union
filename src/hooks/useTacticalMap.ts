@@ -10,51 +10,49 @@ import {
   ownedIslands,
   claims,
 } from "../domain/mapData";
-import { useMapViewport } from "./useMapViewport";
+import { useIslandSelection } from "./useIslandSelection";
 
 export type TacticalMapTab = "node" | "ranking";
 
 export function useTacticalMap() {
-  const [selected, setSelected] = useState<string | null>("2-40");
-  const [pinned, setPinned] = useState<Set<string>>(new Set());
+  const {
+    selected,
+    pinned,
+    open,
+    close,
+    togglePin,
+    clearPins,
+    focus: focusNode,
+  } = useIslandSelection();
   const [showAll, setShowAll] = useState(false);
   const [filter, setFilter] = useState("all");
   const [tab, setTab] = useState<TacticalMapTab>("node");
   const [debug, setDebug] = useState(false);
   const [query, setQuery] = useState("");
-  const { fitMap, centerOn } = useMapViewport();
   const matches = useMemo(() => searchIslands(query, ownedIslands), [query]);
 
-  const openIsland = useCallback((id: string) => {
-    setSelected(id);
-    setTab("node");
-  }, []);
-  const closeIsland = useCallback(() => setSelected(null), []);
-  const togglePin = useCallback(
-    (id: string) =>
-      setPinned((previous) => {
-        const next = new Set(previous);
-        if (next.has(id)) next.delete(id);
-        else next.add(id);
-        return next;
-      }),
-    []
+  const openIsland = useCallback(
+    (id: string) => {
+      open(id);
+      setTab("node");
+    },
+    [open]
   );
-  const clearPins = useCallback(() => setPinned(new Set()), []);
+  const closeIsland = close;
   const selectFaction = useCallback(
     (id: string) => setFilter((previous) => (previous === id ? "all" : id)),
     []
   );
   const toggleDebug = useCallback(() => setDebug((value) => !value), []);
+  // focusNode chỉ mở node + dời camera; reset tab + dọn ô tìm kiếm thuộc
+  // panel/search state, nên được compose ở đây nơi tab & query sống.
   const focusIsland = useCallback(
     (id: string) => {
-      const island = ownedIslands.find((node) => node.id === id);
-      if (!island) return;
-      openIsland(id);
+      focusNode(id);
+      setTab("node");
       setQuery("");
-      centerOn(island.position.x, island.position.y);
     },
-    [openIsland, setQuery, centerOn]
+    [focusNode, setTab]
   );
 
   const nodes = useMemo(
@@ -107,7 +105,6 @@ export function useTacticalMap() {
       clearPins,
       selectFaction,
       toggleDebug,
-      fitMap,
       focusIsland,
       setShowAll,
       setTab,

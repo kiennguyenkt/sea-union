@@ -15,10 +15,7 @@ export function App() {
     <div className={styles.app}>
       <AppHeader />
       <div className={styles.workspace}>
-        <NavigationRail
-          onFitMap={actions.fitMap}
-          onShowRanking={() => actions.setTab("ranking")}
-        />
+        <NavigationRail onShowRanking={() => actions.setTab("ranking")} />
         <main className={styles.mainContent}>
           <MapHeading
             islandCount={map.islandCount}
@@ -33,13 +30,8 @@ export function App() {
             onQueryChange={actions.setQuery}
             onFocusIsland={actions.focusIsland}
             onShowAllChange={actions.setShowAll}
-            onFitMap={actions.fitMap}
           />
-          <MapCanvas
-            nodes={map.nodes}
-            edges={map.edges}
-            debug={map.debug}
-          />
+          <MapCanvas nodes={map.nodes} edges={map.edges} debug={map.debug} />
           <FactionLegend
             factions={map.factions}
             filter={map.filter}

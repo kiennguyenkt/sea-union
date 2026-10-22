@@ -1,22 +1,20 @@
 import { Map, Trophy, Compass } from "lucide-react";
+import { useFitMap } from "../../hooks/useFitMap";
 import styles from "./NavigationRail.module.css";
 
 export interface NavigationRailProps {
-  onFitMap: () => void;
   onShowRanking: () => void;
 }
 
-export function NavigationRail({
-  onFitMap,
-  onShowRanking,
-}: NavigationRailProps) {
+export function NavigationRail({ onShowRanking }: NavigationRailProps) {
+  const fitMap = useFitMap();
   return (
     <nav className={styles.rail}>
       <button
         className={styles.railActive}
         title="Bản đồ"
         aria-label="Bản đồ"
-        onClick={onFitMap}
+        onClick={fitMap}
       >
         <Map />
       </button>
