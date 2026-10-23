@@ -9,7 +9,11 @@ export function AppHeader() {
           <Anchor size={25} />
         </div>
         <div>
-          SEA UNION<small>TACTICAL ATLAS</small>
+          SEA UNION
+          {/* Easter egg: dev in-game id */}
+          <p id="51921435" className={styles.devSignature}>
+            From <strong>Hunter [S517]</strong> with ❤️
+          </p>
         </div>
       </div>
       <div className={styles.divider} />
